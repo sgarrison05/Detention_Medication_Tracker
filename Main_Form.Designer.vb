@@ -46,6 +46,7 @@ Partial Class frmMain
         ' 
         lblListing.BackColor = SystemColors.ActiveCaptionText
         lblListing.BorderStyle = BorderStyle.FixedSingle
+        lblListing.Font = New Font("Cascadia Mono", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         lblListing.ForeColor = SystemColors.Info
         lblListing.Location = New Point(25, 113)
         lblListing.Name = "lblListing"
@@ -92,6 +93,7 @@ Partial Class frmMain
         ' 
         ' lblNKID
         ' 
+        lblNKID.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         lblNKID.Location = New Point(37, 266)
         lblNKID.Name = "lblNKID"
         lblNKID.Size = New Size(100, 23)
@@ -244,7 +246,7 @@ Partial Class frmMain
         Controls.Add(txbChildName)
         Controls.Add(lblListingID)
         Controls.Add(lblListing)
-        Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        Font = New Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         FormBorderStyle = FormBorderStyle.FixedSingle
         Name = "frmMain"
         StartPosition = FormStartPosition.CenterScreen
