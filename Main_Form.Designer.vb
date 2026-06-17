@@ -50,7 +50,7 @@ Partial Class frmMain
         lblListing.ForeColor = SystemColors.Info
         lblListing.Location = New Point(25, 113)
         lblListing.Name = "lblListing"
-        lblListing.Size = New Size(700, 130)
+        lblListing.Size = New Size(813, 130)
         lblListing.TabIndex = 0
         ' 
         ' lblListingID
@@ -104,7 +104,7 @@ Partial Class frmMain
         ' btnAdd
         ' 
         btnAdd.BackColor = Color.Green
-        btnAdd.Location = New Point(325, 315)
+        btnAdd.Location = New Point(438, 315)
         btnAdd.Name = "btnAdd"
         btnAdd.Size = New Size(80, 38)
         btnAdd.TabIndex = 6
@@ -114,7 +114,7 @@ Partial Class frmMain
         ' btnUpdate
         ' 
         btnUpdate.BackColor = Color.Orange
-        btnUpdate.Location = New Point(432, 315)
+        btnUpdate.Location = New Point(545, 315)
         btnUpdate.Name = "btnUpdate"
         btnUpdate.Size = New Size(80, 38)
         btnUpdate.TabIndex = 7
@@ -124,7 +124,7 @@ Partial Class frmMain
         ' btnSearch
         ' 
         btnSearch.BackColor = Color.Yellow
-        btnSearch.Location = New Point(538, 315)
+        btnSearch.Location = New Point(651, 315)
         btnSearch.Name = "btnSearch"
         btnSearch.Size = New Size(80, 38)
         btnSearch.TabIndex = 8
@@ -134,7 +134,7 @@ Partial Class frmMain
         ' btnClose
         ' 
         btnClose.BackColor = Color.Tomato
-        btnClose.Location = New Point(645, 315)
+        btnClose.Location = New Point(758, 315)
         btnClose.Name = "btnClose"
         btnClose.Size = New Size(80, 38)
         btnClose.TabIndex = 9
@@ -144,7 +144,7 @@ Partial Class frmMain
         ' btnRefresh
         ' 
         btnRefresh.BackColor = Color.DodgerBlue
-        btnRefresh.Location = New Point(218, 315)
+        btnRefresh.Location = New Point(331, 315)
         btnRefresh.Name = "btnRefresh"
         btnRefresh.Size = New Size(80, 38)
         btnRefresh.TabIndex = 10
@@ -164,7 +164,7 @@ Partial Class frmMain
         ' lblDateDetained
         ' 
         lblDateDetained.Font = New Font("Segoe UI", 12F)
-        lblDateDetained.Location = New Point(358, 44)
+        lblDateDetained.Location = New Point(418, 52)
         lblDateDetained.Name = "lblDateDetained"
         lblDateDetained.Size = New Size(100, 23)
         lblDateDetained.TabIndex = 13
@@ -175,16 +175,16 @@ Partial Class frmMain
         ' 
         lblDateDetID.AutoSize = True
         lblDateDetID.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        lblDateDetID.Location = New Point(364, 22)
+        lblDateDetID.Location = New Point(425, 22)
         lblDateDetID.Name = "lblDateDetID"
-        lblDateDetID.Size = New Size(91, 15)
+        lblDateDetID.Size = New Size(93, 30)
         lblDateDetID.TabIndex = 12
-        lblDateDetID.Text = "Date Detained:"
+        lblDateDetID.Text = "Date Detained/" & vbCrLf & "Start Med:"
         ' 
         ' lblDateReminder
         ' 
         lblDateReminder.Font = New Font("Segoe UI", 12F)
-        lblDateReminder.Location = New Point(510, 44)
+        lblDateReminder.Location = New Point(599, 52)
         lblDateReminder.Name = "lblDateReminder"
         lblDateReminder.Size = New Size(100, 23)
         lblDateReminder.TabIndex = 15
@@ -195,16 +195,16 @@ Partial Class frmMain
         ' 
         lblDateRemindID.AutoSize = True
         lblDateRemindID.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        lblDateRemindID.Location = New Point(506, 22)
+        lblDateRemindID.Location = New Point(619, 22)
         lblDateRemindID.Name = "lblDateRemindID"
-        lblDateRemindID.Size = New Size(110, 15)
+        lblDateRemindID.Size = New Size(65, 30)
         lblDateRemindID.TabIndex = 14
-        lblDateRemindID.Text = "Date of Reminder:"
+        lblDateRemindID.Text = "Date of " & vbCrLf & "Reminder:"
         ' 
         ' Label1
         ' 
         Label1.Font = New Font("Segoe UI", 12F)
-        Label1.Location = New Point(625, 44)
+        Label1.Location = New Point(738, 52)
         Label1.Name = "Label1"
         Label1.Size = New Size(100, 23)
         Label1.TabIndex = 17
@@ -215,11 +215,11 @@ Partial Class frmMain
         ' 
         lblDateRunoutID.AutoSize = True
         lblDateRunoutID.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        lblDateRunoutID.Location = New Point(627, 22)
+        lblDateRunoutID.Location = New Point(758, 22)
         lblDateRunoutID.Name = "lblDateRunoutID"
-        lblDateRunoutID.Size = New Size(96, 15)
+        lblDateRunoutID.Size = New Size(52, 30)
         lblDateRunoutID.TabIndex = 16
-        lblDateRunoutID.Text = "Date of Runout:" & vbCrLf
+        lblDateRunoutID.Text = "Date of " & vbCrLf & "Runout:" & vbCrLf
         ' 
         ' frmMain
         ' 
@@ -227,7 +227,7 @@ Partial Class frmMain
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         CancelButton = btnClose
-        ClientSize = New Size(748, 365)
+        ClientSize = New Size(866, 365)
         Controls.Add(Label1)
         Controls.Add(lblDateRunoutID)
         Controls.Add(lblDateReminder)

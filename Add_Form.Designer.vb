@@ -28,24 +28,24 @@ Partial Class Add_Form
         lblDetentionID = New Label()
         dtpDetStart = New DateTimePicker()
         lblDateDetainedID = New Label()
-        Label1 = New Label()
+        lblMedID1 = New Label()
         txbMed1 = New TextBox()
-        Label2 = New Label()
+        lblMedID2 = New Label()
         txbMed2 = New TextBox()
-        Label3 = New Label()
+        lblMedID3 = New Label()
         txbMed3 = New TextBox()
-        Label4 = New Label()
+        lblMedID4 = New Label()
         txbMed4 = New TextBox()
         Label5 = New Label()
-        TextBox5 = New TextBox()
-        TextBox6 = New TextBox()
-        TextBox7 = New TextBox()
-        TextBox8 = New TextBox()
-        TextBox9 = New TextBox()
-        TextBox10 = New TextBox()
-        TextBox11 = New TextBox()
+        txbStart1 = New TextBox()
+        txbStart2 = New TextBox()
+        txbStart3 = New TextBox()
+        txbStart4 = New TextBox()
+        txbDosage4 = New TextBox()
+        txbDosage3 = New TextBox()
+        txbDosage2 = New TextBox()
         Label6 = New Label()
-        TextBox12 = New TextBox()
+        txbDosage1 = New TextBox()
         Label7 = New Label()
         Label8 = New Label()
         Label9 = New Label()
@@ -56,14 +56,16 @@ Partial Class Add_Form
         Label14 = New Label()
         Label15 = New Label()
         Label16 = New Label()
-        TextBox13 = New TextBox()
-        TextBox14 = New TextBox()
-        TextBox15 = New TextBox()
+        txbRefill4 = New TextBox()
+        txbRefill3 = New TextBox()
+        txbRefill2 = New TextBox()
         Label17 = New Label()
-        TextBox16 = New TextBox()
+        txbRefill1 = New TextBox()
         btnClose = New Button()
         btnClear = New Button()
         btnSave = New Button()
+        txbNotes = New TextBox()
+        lblNotesID = New Label()
         SuspendLayout()
         ' 
         ' txbChildName
@@ -87,7 +89,7 @@ Partial Class Add_Form
         ' 
         cmbDetFacility.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         cmbDetFacility.FormattingEnabled = True
-        cmbDetFacility.Location = New Point(529, 34)
+        cmbDetFacility.Location = New Point(548, 37)
         cmbDetFacility.Name = "cmbDetFacility"
         cmbDetFacility.Size = New Size(192, 29)
         cmbDetFacility.TabIndex = 2
@@ -95,7 +97,7 @@ Partial Class Add_Form
         ' lblDetentionID
         ' 
         lblDetentionID.AutoSize = True
-        lblDetentionID.Location = New Point(529, 16)
+        lblDetentionID.Location = New Point(548, 19)
         lblDetentionID.Name = "lblDetentionID"
         lblDetentionID.Size = New Size(102, 15)
         lblDetentionID.TabIndex = 3
@@ -119,14 +121,14 @@ Partial Class Add_Form
         lblDateDetainedID.TabIndex = 5
         lblDateDetainedID.Text = "Date Detained / Med Started:"
         ' 
-        ' Label1
+        ' lblMedID1
         ' 
-        Label1.AutoSize = True
-        Label1.Location = New Point(23, 102)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(128, 15)
-        Label1.TabIndex = 7
-        Label1.Text = "Name of Medication 1:"
+        lblMedID1.AutoSize = True
+        lblMedID1.Location = New Point(23, 102)
+        lblMedID1.Name = "lblMedID1"
+        lblMedID1.Size = New Size(128, 15)
+        lblMedID1.TabIndex = 7
+        lblMedID1.Text = "Name of Medication 1:"
         ' 
         ' txbMed1
         ' 
@@ -136,14 +138,14 @@ Partial Class Add_Form
         txbMed1.Size = New Size(268, 29)
         txbMed1.TabIndex = 6
         ' 
-        ' Label2
+        ' lblMedID2
         ' 
-        Label2.AutoSize = True
-        Label2.Location = New Point(23, 169)
-        Label2.Name = "Label2"
-        Label2.Size = New Size(128, 15)
-        Label2.TabIndex = 9
-        Label2.Text = "Name of Medication 2:"
+        lblMedID2.AutoSize = True
+        lblMedID2.Location = New Point(23, 169)
+        lblMedID2.Name = "lblMedID2"
+        lblMedID2.Size = New Size(128, 15)
+        lblMedID2.TabIndex = 9
+        lblMedID2.Text = "Name of Medication 2:"
         ' 
         ' txbMed2
         ' 
@@ -153,14 +155,14 @@ Partial Class Add_Form
         txbMed2.Size = New Size(268, 29)
         txbMed2.TabIndex = 8
         ' 
-        ' Label3
+        ' lblMedID3
         ' 
-        Label3.AutoSize = True
-        Label3.Location = New Point(23, 242)
-        Label3.Name = "Label3"
-        Label3.Size = New Size(128, 15)
-        Label3.TabIndex = 11
-        Label3.Text = "Name of Medication 3:"
+        lblMedID3.AutoSize = True
+        lblMedID3.Location = New Point(23, 242)
+        lblMedID3.Name = "lblMedID3"
+        lblMedID3.Size = New Size(128, 15)
+        lblMedID3.TabIndex = 11
+        lblMedID3.Text = "Name of Medication 3:"
         ' 
         ' txbMed3
         ' 
@@ -170,14 +172,14 @@ Partial Class Add_Form
         txbMed3.Size = New Size(268, 29)
         txbMed3.TabIndex = 10
         ' 
-        ' Label4
+        ' lblMedID4
         ' 
-        Label4.AutoSize = True
-        Label4.Location = New Point(23, 314)
-        Label4.Name = "Label4"
-        Label4.Size = New Size(128, 15)
-        Label4.TabIndex = 13
-        Label4.Text = "Name of Medication 4:"
+        lblMedID4.AutoSize = True
+        lblMedID4.Location = New Point(23, 314)
+        lblMedID4.Name = "lblMedID4"
+        lblMedID4.Size = New Size(128, 15)
+        lblMedID4.TabIndex = 13
+        lblMedID4.Text = "Name of Medication 4:"
         ' 
         ' txbMed4
         ' 
@@ -196,61 +198,61 @@ Partial Class Add_Form
         Label5.TabIndex = 15
         Label5.Text = "Number of Pills " & vbCrLf & "Started or Added:"
         ' 
-        ' TextBox5
+        ' txbStart1
         ' 
-        TextBox5.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        TextBox5.Location = New Point(331, 120)
-        TextBox5.Name = "TextBox5"
-        TextBox5.Size = New Size(47, 29)
-        TextBox5.TabIndex = 14
+        txbStart1.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        txbStart1.Location = New Point(331, 120)
+        txbStart1.Name = "txbStart1"
+        txbStart1.Size = New Size(47, 29)
+        txbStart1.TabIndex = 14
         ' 
-        ' TextBox6
+        ' txbStart2
         ' 
-        TextBox6.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        TextBox6.Location = New Point(331, 187)
-        TextBox6.Name = "TextBox6"
-        TextBox6.Size = New Size(47, 29)
-        TextBox6.TabIndex = 16
+        txbStart2.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        txbStart2.Location = New Point(331, 187)
+        txbStart2.Name = "txbStart2"
+        txbStart2.Size = New Size(47, 29)
+        txbStart2.TabIndex = 16
         ' 
-        ' TextBox7
+        ' txbStart3
         ' 
-        TextBox7.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        TextBox7.Location = New Point(331, 260)
-        TextBox7.Name = "TextBox7"
-        TextBox7.Size = New Size(47, 29)
-        TextBox7.TabIndex = 17
+        txbStart3.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        txbStart3.Location = New Point(331, 260)
+        txbStart3.Name = "txbStart3"
+        txbStart3.Size = New Size(47, 29)
+        txbStart3.TabIndex = 17
         ' 
-        ' TextBox8
+        ' txbStart4
         ' 
-        TextBox8.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        TextBox8.Location = New Point(331, 332)
-        TextBox8.Name = "TextBox8"
-        TextBox8.Size = New Size(47, 29)
-        TextBox8.TabIndex = 18
+        txbStart4.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        txbStart4.Location = New Point(331, 332)
+        txbStart4.Name = "txbStart4"
+        txbStart4.Size = New Size(47, 29)
+        txbStart4.TabIndex = 18
         ' 
-        ' TextBox9
+        ' txbDosage4
         ' 
-        TextBox9.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        TextBox9.Location = New Point(439, 332)
-        TextBox9.Name = "TextBox9"
-        TextBox9.Size = New Size(47, 29)
-        TextBox9.TabIndex = 23
+        txbDosage4.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        txbDosage4.Location = New Point(439, 332)
+        txbDosage4.Name = "txbDosage4"
+        txbDosage4.Size = New Size(47, 29)
+        txbDosage4.TabIndex = 23
         ' 
-        ' TextBox10
+        ' txbDosage3
         ' 
-        TextBox10.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        TextBox10.Location = New Point(439, 260)
-        TextBox10.Name = "TextBox10"
-        TextBox10.Size = New Size(47, 29)
-        TextBox10.TabIndex = 22
+        txbDosage3.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        txbDosage3.Location = New Point(439, 260)
+        txbDosage3.Name = "txbDosage3"
+        txbDosage3.Size = New Size(47, 29)
+        txbDosage3.TabIndex = 22
         ' 
-        ' TextBox11
+        ' txbDosage2
         ' 
-        TextBox11.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        TextBox11.Location = New Point(439, 187)
-        TextBox11.Name = "TextBox11"
-        TextBox11.Size = New Size(47, 29)
-        TextBox11.TabIndex = 21
+        txbDosage2.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        txbDosage2.Location = New Point(439, 187)
+        txbDosage2.Name = "txbDosage2"
+        txbDosage2.Size = New Size(47, 29)
+        txbDosage2.TabIndex = 21
         ' 
         ' Label6
         ' 
@@ -261,13 +263,13 @@ Partial Class Add_Form
         Label6.TabIndex = 20
         Label6.Text = "Daily " & vbCrLf & "Dosage:"
         ' 
-        ' TextBox12
+        ' txbDosage1
         ' 
-        TextBox12.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        TextBox12.Location = New Point(439, 120)
-        TextBox12.Name = "TextBox12"
-        TextBox12.Size = New Size(47, 29)
-        TextBox12.TabIndex = 19
+        txbDosage1.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        txbDosage1.Location = New Point(439, 120)
+        txbDosage1.Name = "txbDosage1"
+        txbDosage1.Size = New Size(47, 29)
+        txbDosage1.TabIndex = 19
         ' 
         ' Label7
         ' 
@@ -367,29 +369,29 @@ Partial Class Add_Form
         Label16.TabIndex = 29
         Label16.Text = "Days Remaing " & vbCrLf & "with Meds:"
         ' 
-        ' TextBox13
+        ' txbRefill4
         ' 
-        TextBox13.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        TextBox13.Location = New Point(751, 332)
-        TextBox13.Name = "TextBox13"
-        TextBox13.Size = New Size(47, 29)
-        TextBox13.TabIndex = 38
+        txbRefill4.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        txbRefill4.Location = New Point(751, 332)
+        txbRefill4.Name = "txbRefill4"
+        txbRefill4.Size = New Size(47, 29)
+        txbRefill4.TabIndex = 38
         ' 
-        ' TextBox14
+        ' txbRefill3
         ' 
-        TextBox14.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        TextBox14.Location = New Point(751, 260)
-        TextBox14.Name = "TextBox14"
-        TextBox14.Size = New Size(47, 29)
-        TextBox14.TabIndex = 37
+        txbRefill3.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        txbRefill3.Location = New Point(751, 260)
+        txbRefill3.Name = "txbRefill3"
+        txbRefill3.Size = New Size(47, 29)
+        txbRefill3.TabIndex = 37
         ' 
-        ' TextBox15
+        ' txbRefill2
         ' 
-        TextBox15.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        TextBox15.Location = New Point(751, 187)
-        TextBox15.Name = "TextBox15"
-        TextBox15.Size = New Size(47, 29)
-        TextBox15.TabIndex = 36
+        txbRefill2.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        txbRefill2.Location = New Point(751, 187)
+        txbRefill2.Name = "txbRefill2"
+        txbRefill2.Size = New Size(47, 29)
+        txbRefill2.TabIndex = 36
         ' 
         ' Label17
         ' 
@@ -400,54 +402,76 @@ Partial Class Add_Form
         Label17.TabIndex = 35
         Label17.Text = "Number of" & vbCrLf & "Refills:"
         ' 
-        ' TextBox16
+        ' txbRefill1
         ' 
-        TextBox16.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        TextBox16.Location = New Point(751, 120)
-        TextBox16.Name = "TextBox16"
-        TextBox16.Size = New Size(47, 29)
-        TextBox16.TabIndex = 34
+        txbRefill1.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        txbRefill1.Location = New Point(751, 120)
+        txbRefill1.Name = "txbRefill1"
+        txbRefill1.Size = New Size(47, 29)
+        txbRefill1.TabIndex = 34
         ' 
         ' btnClose
         ' 
-        btnClose.Location = New Point(723, 395)
+        btnClose.BackColor = Color.Tomato
+        btnClose.Location = New Point(723, 399)
         btnClose.Name = "btnClose"
         btnClose.Size = New Size(75, 34)
         btnClose.TabIndex = 39
-        btnClose.Text = "Close"
-        btnClose.UseVisualStyleBackColor = True
+        btnClose.Text = "Return"
+        btnClose.UseVisualStyleBackColor = False
         ' 
         ' btnClear
         ' 
-        btnClear.Location = New Point(633, 395)
+        btnClear.BackColor = Color.DeepSkyBlue
+        btnClear.Location = New Point(633, 399)
         btnClear.Name = "btnClear"
         btnClear.Size = New Size(75, 34)
         btnClear.TabIndex = 40
         btnClear.Text = "Clear"
-        btnClear.UseVisualStyleBackColor = True
+        btnClear.UseVisualStyleBackColor = False
         ' 
         ' btnSave
         ' 
-        btnSave.Location = New Point(529, 395)
+        btnSave.BackColor = Color.LawnGreen
+        btnSave.Location = New Point(529, 399)
         btnSave.Name = "btnSave"
         btnSave.Size = New Size(75, 34)
         btnSave.TabIndex = 41
         btnSave.Text = "Save"
-        btnSave.UseVisualStyleBackColor = True
+        btnSave.UseVisualStyleBackColor = False
+        ' 
+        ' txbNotes
+        ' 
+        txbNotes.Location = New Point(23, 390)
+        txbNotes.Multiline = True
+        txbNotes.Name = "txbNotes"
+        txbNotes.Size = New Size(463, 43)
+        txbNotes.TabIndex = 42
+        ' 
+        ' lblNotesID
+        ' 
+        lblNotesID.AutoSize = True
+        lblNotesID.Location = New Point(23, 372)
+        lblNotesID.Name = "lblNotesID"
+        lblNotesID.Size = New Size(41, 15)
+        lblNotesID.TabIndex = 43
+        lblNotesID.Text = "Notes:"
         ' 
         ' Add_Form
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(823, 450)
+        Controls.Add(lblNotesID)
+        Controls.Add(txbNotes)
         Controls.Add(btnSave)
         Controls.Add(btnClear)
         Controls.Add(btnClose)
-        Controls.Add(TextBox13)
-        Controls.Add(TextBox14)
-        Controls.Add(TextBox15)
+        Controls.Add(txbRefill4)
+        Controls.Add(txbRefill3)
+        Controls.Add(txbRefill2)
         Controls.Add(Label17)
-        Controls.Add(TextBox16)
+        Controls.Add(txbRefill1)
         Controls.Add(Label12)
         Controls.Add(Label13)
         Controls.Add(Label14)
@@ -458,23 +482,23 @@ Partial Class Add_Form
         Controls.Add(Label9)
         Controls.Add(Label8)
         Controls.Add(Label7)
-        Controls.Add(TextBox9)
-        Controls.Add(TextBox10)
-        Controls.Add(TextBox11)
+        Controls.Add(txbDosage4)
+        Controls.Add(txbDosage3)
+        Controls.Add(txbDosage2)
         Controls.Add(Label6)
-        Controls.Add(TextBox12)
-        Controls.Add(TextBox8)
-        Controls.Add(TextBox7)
-        Controls.Add(TextBox6)
+        Controls.Add(txbDosage1)
+        Controls.Add(txbStart4)
+        Controls.Add(txbStart3)
+        Controls.Add(txbStart2)
         Controls.Add(Label5)
-        Controls.Add(TextBox5)
-        Controls.Add(Label4)
+        Controls.Add(txbStart1)
+        Controls.Add(lblMedID4)
         Controls.Add(txbMed4)
-        Controls.Add(Label3)
+        Controls.Add(lblMedID3)
         Controls.Add(txbMed3)
-        Controls.Add(Label2)
+        Controls.Add(lblMedID2)
         Controls.Add(txbMed2)
-        Controls.Add(Label1)
+        Controls.Add(lblMedID1)
         Controls.Add(txbMed1)
         Controls.Add(lblDateDetainedID)
         Controls.Add(dtpDetStart)
@@ -483,7 +507,7 @@ Partial Class Add_Form
         Controls.Add(lblChildNameID)
         Controls.Add(txbChildName)
         Name = "Add_Form"
-        Text = "Add Child"
+        Text = "Add / Update Child"
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -494,24 +518,24 @@ Partial Class Add_Form
     Friend WithEvents lblDetentionID As Label
     Friend WithEvents dtpDetStart As DateTimePicker
     Friend WithEvents lblDateDetainedID As Label
-    Friend WithEvents Label1 As Label
+    Friend WithEvents lblMedID1 As Label
     Friend WithEvents txbMed1 As TextBox
-    Friend WithEvents Label2 As Label
+    Friend WithEvents lblMedID2 As Label
     Friend WithEvents txbMed2 As TextBox
-    Friend WithEvents Label3 As Label
+    Friend WithEvents lblMedID3 As Label
     Friend WithEvents txbMed3 As TextBox
-    Friend WithEvents Label4 As Label
+    Friend WithEvents lblMedID4 As Label
     Friend WithEvents txbMed4 As TextBox
     Friend WithEvents Label5 As Label
-    Friend WithEvents TextBox5 As TextBox
-    Friend WithEvents TextBox6 As TextBox
-    Friend WithEvents TextBox7 As TextBox
-    Friend WithEvents TextBox8 As TextBox
-    Friend WithEvents TextBox9 As TextBox
-    Friend WithEvents TextBox10 As TextBox
-    Friend WithEvents TextBox11 As TextBox
+    Friend WithEvents txbStart1 As TextBox
+    Friend WithEvents txbStart2 As TextBox
+    Friend WithEvents txbStart3 As TextBox
+    Friend WithEvents txbStart4 As TextBox
+    Friend WithEvents txbDosage4 As TextBox
+    Friend WithEvents txbDosage3 As TextBox
+    Friend WithEvents txbDosage2 As TextBox
     Friend WithEvents Label6 As Label
-    Friend WithEvents TextBox12 As TextBox
+    Friend WithEvents txbDosage1 As TextBox
     Friend WithEvents Label7 As Label
     Friend WithEvents Label8 As Label
     Friend WithEvents Label9 As Label
@@ -522,12 +546,14 @@ Partial Class Add_Form
     Friend WithEvents Label14 As Label
     Friend WithEvents Label15 As Label
     Friend WithEvents Label16 As Label
-    Friend WithEvents TextBox13 As TextBox
-    Friend WithEvents TextBox14 As TextBox
-    Friend WithEvents TextBox15 As TextBox
+    Friend WithEvents txbRefill4 As TextBox
+    Friend WithEvents txbRefill3 As TextBox
+    Friend WithEvents txbRefill2 As TextBox
     Friend WithEvents Label17 As Label
-    Friend WithEvents TextBox16 As TextBox
+    Friend WithEvents txbRefill1 As TextBox
     Friend WithEvents btnClose As Button
     Friend WithEvents btnClear As Button
     Friend WithEvents btnSave As Button
+    Friend WithEvents txbNotes As TextBox
+    Friend WithEvents lblNotesID As Label
 End Class
