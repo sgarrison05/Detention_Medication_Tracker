@@ -40,6 +40,7 @@ Partial Class frmMain
         lblDateRemindID = New Label()
         Label1 = New Label()
         lblDateRunoutID = New Label()
+        Label2 = New Label()
         SuspendLayout()
         ' 
         ' lblListing
@@ -188,7 +189,7 @@ Partial Class frmMain
         lblDateReminder.Name = "lblDateReminder"
         lblDateReminder.Size = New Size(100, 23)
         lblDateReminder.TabIndex = 15
-        lblDateReminder.Text = "dteReminder"
+        lblDateReminder.Text = "dteRunout - 7"
         lblDateReminder.TextAlign = ContentAlignment.MiddleCenter
         ' 
         ' lblDateRemindID
@@ -208,7 +209,7 @@ Partial Class frmMain
         Label1.Name = "Label1"
         Label1.Size = New Size(100, 23)
         Label1.TabIndex = 17
-        Label1.Text = "dteRunout"
+        Label1.Text = "# Pills - Today"
         Label1.TextAlign = ContentAlignment.MiddleCenter
         ' 
         ' lblDateRunoutID
@@ -221,6 +222,16 @@ Partial Class frmMain
         lblDateRunoutID.TabIndex = 16
         lblDateRunoutID.Text = "Date of " & vbCrLf & "Runout:" & vbCrLf
         ' 
+        ' Label2
+        ' 
+        Label2.Font = New Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label2.ForeColor = Color.Red
+        Label2.Location = New Point(331, 251)
+        Label2.Name = "Label2"
+        Label2.Size = New Size(507, 38)
+        Label2.TabIndex = 18
+        Label2.Text = "Warning"
+        ' 
         ' frmMain
         ' 
         AcceptButton = btnAdd
@@ -228,6 +239,7 @@ Partial Class frmMain
         AutoScaleMode = AutoScaleMode.Font
         CancelButton = btnClose
         ClientSize = New Size(866, 365)
+        Controls.Add(Label2)
         Controls.Add(Label1)
         Controls.Add(lblDateRunoutID)
         Controls.Add(lblDateReminder)
@@ -250,7 +262,7 @@ Partial Class frmMain
         FormBorderStyle = FormBorderStyle.FixedSingle
         Name = "frmMain"
         StartPosition = FormStartPosition.CenterScreen
-        Text = "Main Form"
+        Text = "Detention Medication Tracker"
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -273,5 +285,6 @@ Partial Class frmMain
     Friend WithEvents lblDateRemindID As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents lblDateRunoutID As Label
+    Friend WithEvents Label2 As Label
 
 End Class

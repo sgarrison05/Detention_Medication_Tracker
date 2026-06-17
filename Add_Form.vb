@@ -1,3 +1,3 @@
-﻿Public Class Add_Form
+﻿Public Class frmAdd
 
 End Class

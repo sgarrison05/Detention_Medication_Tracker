@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class Add_Form
+Partial Class frmAdd
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -457,7 +457,7 @@ Partial Class Add_Form
         lblNotesID.TabIndex = 43
         lblNotesID.Text = "Notes:"
         ' 
-        ' Add_Form
+        ' frmAdd
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
@@ -506,7 +506,7 @@ Partial Class Add_Form
         Controls.Add(cmbDetFacility)
         Controls.Add(lblChildNameID)
         Controls.Add(txbChildName)
-        Name = "Add_Form"
+        Name = "frmAdd"
         Text = "Add / Update Child"
         ResumeLayout(False)
         PerformLayout()
