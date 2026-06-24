@@ -60,6 +60,81 @@ Public Class frmMain
 
     Public Sub PullData()
 
+        Try
+            Dim myText As String = My.Computer.FileSystem.ReadAllText(mfile)
+            Dim mySentence() As String = Split(myText, vbCrLf)
+            Dim listing As Integer = 0  ' Counter for each record
+            Dim recieve As Integer = 0  ' Counter for receiving County
+            Dim sent As Integer = 0     ' Counter for sending County
+            Dim dteICTThresh As Date
+            Dim dteProgRptThresh As Date
+            Dim display As String
+
+            For Each sentence As String In mySentence
+
+                If sentence.Contains("Pending") Then
+                    Dim words() = Split(sentence, vbTab)
+
+                    display = String.Join(" ".PadRight(5), words)
+
+                    'Compute numbers of sending/receiving counties for summary at bottom of form
+                    If words(1).TrimEnd = "Orange" Then
+                        recieve += 1
+                    End If
+
+                    If words(2).TrimEnd = "Orange" Then
+                        sent += 1
+                    End If
+
+                    lblICTListing.Text &= (listing + 1).ToString & ".)  " & display & vbCrLf
+                    listing += 1
+
+                ElseIf sentence.Contains("/"c) Then
+
+                    Dim words() = Split(sentence, vbTab)
+
+                    'Extract two dates to compute refresh on data pull
+                    dteICTThresh = CDate(words(6).TrimEnd)
+                    dteProgRptThresh = CDate(words(7).TrimEnd)
+
+                    'get updated days remaining in progress report and program
+                    Dim progRptDaysRefresh As Integer = dteProgRptThresh.Subtract(Date.Now).Days
+                    Dim ictDaysRefresh As Integer = dteICTThresh.Subtract(Date.Now).Days
+
+                    'inject refreshed days remaining into the appropriate array index for display on form
+                    words(8) = progRptDaysRefresh.ToString.PadLeft(3) & " days"
+                    words(9) = ictDaysRefresh.ToString.PadLeft(3) & " days"
+
+                    'Put the words back together with padding for display on form
+                    display = String.Join(" ".PadRight(5), words)
+
+                    'Compute numbers of sending/receiving counties for summary at bottom of form
+                    If words(1).TrimEnd = "Orange" Then
+                        recieve += 1
+                    End If
+
+                    If words(2).TrimEnd = "Orange" Then
+                        sent += 1
+                    End If
+
+                    lblICTListing.Text &= (listing + 1).ToString & ".)  " & display & vbCrLf
+                    listing += 1
+
+                End If
+            Next
+
+            lblTotICTChildren.Text = listing.ToString
+            lblTotICTReceived.Text = recieve.ToString
+            lblTotICTSent.Text = sent.ToString
+
+        Catch ex As Exception
+            MessageBox.Show("An error occurred while pulling data: " &
+                            ex.Message,
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error)
+        End Try
+
     End Sub
 
     Public Function RefreshFile(filepath As String) As String

@@ -3,7 +3,7 @@ bin/
 obj/
 
 # Specific Folders
-
+.github/
 
 #User Specific Files
 *.user
