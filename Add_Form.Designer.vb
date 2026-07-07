@@ -66,6 +66,7 @@ Partial Class frmAdd
         btnSave = New Button()
         txbNotes = New TextBox()
         lblNotesID = New Label()
+        Label1 = New Label()
         SuspendLayout()
         ' 
         ' txbChildName
@@ -192,11 +193,11 @@ Partial Class frmAdd
         ' Label5
         ' 
         Label5.AutoSize = True
-        Label5.Location = New Point(308, 87)
+        Label5.Location = New Point(299, 87)
         Label5.Name = "Label5"
-        Label5.Size = New Size(99, 30)
+        Label5.Size = New Size(125, 30)
         Label5.TabIndex = 15
-        Label5.Text = "Number of Pills " & vbCrLf & "Started or Added:"
+        Label5.Text = "Number of Pills " & vbCrLf & "Started with or Added:"
         ' 
         ' txbStart1
         ' 
@@ -457,11 +458,22 @@ Partial Class frmAdd
         lblNotesID.TabIndex = 43
         lblNotesID.Text = "Notes:"
         ' 
+        ' Label1
+        ' 
+        Label1.AutoSize = True
+        Label1.ForeColor = Color.Red
+        Label1.Location = New Point(23, 87)
+        Label1.Name = "Label1"
+        Label1.Size = New Size(157, 15)
+        Label1.TabIndex = 44
+        Label1.Text = "* Must contain dosage ""mg"""
+        ' 
         ' frmAdd
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(823, 450)
+        Controls.Add(Label1)
         Controls.Add(lblNotesID)
         Controls.Add(txbNotes)
         Controls.Add(btnSave)
@@ -556,4 +568,5 @@ Partial Class frmAdd
     Friend WithEvents btnSave As Button
     Friend WithEvents txbNotes As TextBox
     Friend WithEvents lblNotesID As Label
+    Friend WithEvents Label1 As Label
 End Class

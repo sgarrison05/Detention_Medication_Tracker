@@ -16,10 +16,11 @@ Public Class frmMain
 
     Private ReadOnly title As String = "Detention Medication Tracker"
     Private dteToday As Date = Date.Today
-    Public Shared ReadOnly mdirectoy As String = Path.Combine("C:\", "DetaineeMedicationTracker")
+    Private dteInitDetained As Date
+    Public Shared ReadOnly mdirectoy As String = Path.Combine("C:\", "Trackers")
     Public Shared ReadOnly mfile As String = Path.Combine(mdirectoy, "med_tracker.txt")
 
-    '--------------------------------- Form Events ---------------------------------
+#Region "===== Form Events ====="
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles Me.Load
 
@@ -58,74 +59,69 @@ Public Class frmMain
 
     End Sub
 
+#End Region
+
+#Region "===== Functions and Subroutines ====="
+
     Public Sub PullData()
 
         Try
             Dim myText As String = My.Computer.FileSystem.ReadAllText(mfile)
             Dim mySentence() As String = Split(myText, vbCrLf)
             Dim listing As Integer = 0  ' Counter for each record
-            Dim recieve As Integer = 0  ' Counter for receiving County
-            Dim sent As Integer = 0     ' Counter for sending County
-            Dim dteICTThresh As Date
-            Dim dteProgRptThresh As Date
+            Dim detained As Integer = 0  ' Counter for number of kids in Detention
+            Dim childName As String = Me.txbChildName.Text
+            Dim dteDetained As Date
+            Dim dteReminder As Date
+            Dim dteRunout As Date
             Dim display As String
 
             For Each sentence As String In mySentence
 
-                If sentence.Contains("Pending") Then
-                    Dim words() = Split(sentence, vbTab)
+                If sentence.Contains(","c) Then
+                    Dim outerWords() = Split(sentence, vbTab)
 
-                    display = String.Join(" ".PadRight(5), words)
 
-                    'Compute numbers of sending/receiving counties for summary at bottom of form
-                    If words(1).TrimEnd = "Orange" Then
-                        recieve += 1
+                    display = String.Join(" ".PadRight(5), outerWords)
+
+                    'Compute numbers of kids in Detention
+                    If outerWords(1).TrimEnd = childName Then
+                        detained += 1
                     End If
 
-                    If words(2).TrimEnd = "Orange" Then
-                        sent += 1
+                    lblListing.Text &= (listing + 1).ToString & ".)  " & display & vbCrLf
+
+
+                    If sentence.Contains("mg") Then
+
+                        Dim innerWords() = Split(sentence, vbTab)
+
+                        'Extract dates to compute refresh on data pull
+                        dteDetained = CDate(innerWords(2).TrimEnd)
+                        dteReminder = CDate(innerWords(8).TrimEnd)
+                        dteRunout = CDate(innerWords(9).TrimEnd)
+
+                        'get updated days remaining for reminder and runout dates
+                        Dim ReminderDaysRefresh As Integer = dteReminder.Subtract(Date.Now).Days
+                        Dim RunoutDaysRefresh As Integer = dteRunout.Subtract(Date.Now).Days
+
+                        'inject refreshed days remaining into the appropriate array index for display on form
+                        innerWords(8) = ReminderDaysRefresh.ToString.PadLeft(3) & " days"
+                        innerWords(9) = RunoutDaysRefresh.ToString.PadLeft(3) & " days"
+
+                        'Put the words back together with padding for display on form
+                        display = String.Join(" ".PadRight(5), innerWords)
+
+                        lblListing.Text &= (listing + 1).ToString & ".)  " & display & vbCrLf
+
                     End If
-
-                    lblICTListing.Text &= (listing + 1).ToString & ".)  " & display & vbCrLf
-                    listing += 1
-
-                ElseIf sentence.Contains("/"c) Then
-
-                    Dim words() = Split(sentence, vbTab)
-
-                    'Extract two dates to compute refresh on data pull
-                    dteICTThresh = CDate(words(6).TrimEnd)
-                    dteProgRptThresh = CDate(words(7).TrimEnd)
-
-                    'get updated days remaining in progress report and program
-                    Dim progRptDaysRefresh As Integer = dteProgRptThresh.Subtract(Date.Now).Days
-                    Dim ictDaysRefresh As Integer = dteICTThresh.Subtract(Date.Now).Days
-
-                    'inject refreshed days remaining into the appropriate array index for display on form
-                    words(8) = progRptDaysRefresh.ToString.PadLeft(3) & " days"
-                    words(9) = ictDaysRefresh.ToString.PadLeft(3) & " days"
-
-                    'Put the words back together with padding for display on form
-                    display = String.Join(" ".PadRight(5), words)
-
-                    'Compute numbers of sending/receiving counties for summary at bottom of form
-                    If words(1).TrimEnd = "Orange" Then
-                        recieve += 1
-                    End If
-
-                    If words(2).TrimEnd = "Orange" Then
-                        sent += 1
-                    End If
-
-                    lblICTListing.Text &= (listing + 1).ToString & ".)  " & display & vbCrLf
-                    listing += 1
-
                 End If
+                listing += 1
             Next
 
-            lblTotICTChildren.Text = listing.ToString
-            lblTotICTReceived.Text = recieve.ToString
-            lblTotICTSent.Text = sent.ToString
+            lblDateDetained.Text = dteDetained.ToString("MM/dd/yyyy")
+            lblDateToday.Text = dteToday.ToString("MM/dd/yyyy")
+            lblNKID.Text = listing.ToString
 
         Catch ex As Exception
             MessageBox.Show("An error occurred while pulling data: " &
@@ -235,6 +231,10 @@ Public Class frmMain
 
     End Function
 
+#End Region
+
+#Region "====== Button Events ====="
+
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
 
         Me.Close()
@@ -247,4 +247,7 @@ Public Class frmMain
         'and dteRunout variables once a child is named and exists.
 
     End Sub
+
+#End Region
+
 End Class

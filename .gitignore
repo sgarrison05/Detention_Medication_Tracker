@@ -4,6 +4,7 @@ obj/
 
 # Specific Folders
 .github/
+.vs/
 
 #User Specific Files
 *.user

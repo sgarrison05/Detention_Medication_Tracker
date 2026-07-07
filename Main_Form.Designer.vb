@@ -36,11 +36,11 @@ Partial Class frmMain
         btnData = New Button()
         lblDateDetained = New Label()
         lblDateDetID = New Label()
-        lblDateReminder = New Label()
-        lblDateRemindID = New Label()
+        lblWarning = New Label()
         Label1 = New Label()
-        lblDateRunoutID = New Label()
         Label2 = New Label()
+        lblDateToday = New Label()
+        lblTodayID = New Label()
         SuspendLayout()
         ' 
         ' lblListing
@@ -49,7 +49,7 @@ Partial Class frmMain
         lblListing.BorderStyle = BorderStyle.FixedSingle
         lblListing.Font = New Font("Cascadia Mono", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         lblListing.ForeColor = SystemColors.Info
-        lblListing.Location = New Point(25, 113)
+        lblListing.Location = New Point(25, 108)
         lblListing.Name = "lblListing"
         lblListing.Size = New Size(813, 130)
         lblListing.TabIndex = 0
@@ -165,7 +165,7 @@ Partial Class frmMain
         ' lblDateDetained
         ' 
         lblDateDetained.Font = New Font("Segoe UI", 12F)
-        lblDateDetained.Location = New Point(418, 52)
+        lblDateDetained.Location = New Point(389, 42)
         lblDateDetained.Name = "lblDateDetained"
         lblDateDetained.Size = New Size(100, 23)
         lblDateDetained.TabIndex = 13
@@ -174,63 +174,61 @@ Partial Class frmMain
         ' 
         ' lblDateDetID
         ' 
-        lblDateDetID.AutoSize = True
         lblDateDetID.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        lblDateDetID.Location = New Point(425, 22)
+        lblDateDetID.Location = New Point(364, 22)
         lblDateDetID.Name = "lblDateDetID"
-        lblDateDetID.Size = New Size(93, 30)
+        lblDateDetID.Size = New Size(154, 15)
         lblDateDetID.TabIndex = 12
-        lblDateDetID.Text = "Date Detained/" & vbCrLf & "Start Med:"
+        lblDateDetID.Text = "Date Detained/Start Med:"
         ' 
-        ' lblDateReminder
+        ' lblWarning
         ' 
-        lblDateReminder.Font = New Font("Segoe UI", 12F)
-        lblDateReminder.Location = New Point(599, 52)
-        lblDateReminder.Name = "lblDateReminder"
-        lblDateReminder.Size = New Size(100, 23)
-        lblDateReminder.TabIndex = 15
-        lblDateReminder.Text = "dteRunout - 7"
-        lblDateReminder.TextAlign = ContentAlignment.MiddleCenter
-        ' 
-        ' lblDateRemindID
-        ' 
-        lblDateRemindID.AutoSize = True
-        lblDateRemindID.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        lblDateRemindID.Location = New Point(619, 22)
-        lblDateRemindID.Name = "lblDateRemindID"
-        lblDateRemindID.Size = New Size(65, 30)
-        lblDateRemindID.TabIndex = 14
-        lblDateRemindID.Text = "Date of " & vbCrLf & "Reminder:"
+        lblWarning.Font = New Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblWarning.ForeColor = Color.Red
+        lblWarning.Location = New Point(331, 251)
+        lblWarning.Name = "lblWarning"
+        lblWarning.Size = New Size(507, 38)
+        lblWarning.TabIndex = 18
+        lblWarning.Text = "Warning"
         ' 
         ' Label1
         ' 
         Label1.Font = New Font("Segoe UI", 12F)
-        Label1.Location = New Point(738, 52)
+        Label1.Location = New Point(590, 40)
         Label1.Name = "Label1"
-        Label1.Size = New Size(100, 23)
-        Label1.TabIndex = 17
-        Label1.Text = "# Pills - Today"
+        Label1.Size = New Size(93, 23)
+        Label1.TabIndex = 20
+        Label1.Text = "No. of Days"
         Label1.TextAlign = ContentAlignment.MiddleCenter
-        ' 
-        ' lblDateRunoutID
-        ' 
-        lblDateRunoutID.AutoSize = True
-        lblDateRunoutID.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        lblDateRunoutID.Location = New Point(758, 22)
-        lblDateRunoutID.Name = "lblDateRunoutID"
-        lblDateRunoutID.Size = New Size(52, 30)
-        lblDateRunoutID.TabIndex = 16
-        lblDateRunoutID.Text = "Date of " & vbCrLf & "Runout:" & vbCrLf
         ' 
         ' Label2
         ' 
-        Label2.Font = New Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label2.ForeColor = Color.Red
-        Label2.Location = New Point(331, 251)
+        Label2.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        Label2.Location = New Point(590, 22)
         Label2.Name = "Label2"
-        Label2.Size = New Size(507, 38)
-        Label2.TabIndex = 18
-        Label2.Text = "Warning"
+        Label2.Size = New Size(93, 15)
+        Label2.TabIndex = 19
+        Label2.Text = "Length of Stay"
+        ' 
+        ' lblDateToday
+        ' 
+        lblDateToday.Font = New Font("Segoe UI", 12F)
+        lblDateToday.Location = New Point(738, 40)
+        lblDateToday.Name = "lblDateToday"
+        lblDateToday.Size = New Size(100, 23)
+        lblDateToday.TabIndex = 22
+        lblDateToday.Text = "dteToday"
+        lblDateToday.TextAlign = ContentAlignment.MiddleCenter
+        ' 
+        ' lblTodayID
+        ' 
+        lblTodayID.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        lblTodayID.Location = New Point(746, 22)
+        lblTodayID.Name = "lblTodayID"
+        lblTodayID.Size = New Size(85, 15)
+        lblTodayID.TabIndex = 21
+        lblTodayID.Text = "Today's Date:"
+        lblTodayID.TextAlign = ContentAlignment.MiddleCenter
         ' 
         ' frmMain
         ' 
@@ -239,11 +237,11 @@ Partial Class frmMain
         AutoScaleMode = AutoScaleMode.Font
         CancelButton = btnClose
         ClientSize = New Size(866, 365)
-        Controls.Add(Label2)
+        Controls.Add(lblDateToday)
+        Controls.Add(lblTodayID)
         Controls.Add(Label1)
-        Controls.Add(lblDateRunoutID)
-        Controls.Add(lblDateReminder)
-        Controls.Add(lblDateRemindID)
+        Controls.Add(Label2)
+        Controls.Add(lblWarning)
         Controls.Add(lblDateDetained)
         Controls.Add(lblDateDetID)
         Controls.Add(btnData)
@@ -281,10 +279,10 @@ Partial Class frmMain
     Friend WithEvents btnData As Button
     Friend WithEvents lblDateDetained As Label
     Friend WithEvents lblDateDetID As Label
-    Friend WithEvents lblDateReminder As Label
-    Friend WithEvents lblDateRemindID As Label
+    Friend WithEvents lblWarning As Label
     Friend WithEvents Label1 As Label
-    Friend WithEvents lblDateRunoutID As Label
     Friend WithEvents Label2 As Label
+    Friend WithEvents lblDateToday As Label
+    Friend WithEvents lblTodayID As Label
 
 End Class
