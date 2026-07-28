@@ -52,6 +52,8 @@ Public Class frmMain
         Else
             If RefreshFile(mfile) Then
                 PullData()
+                Dim detainedCount As Integer = GetDetaineesCount()
+                lblNKID.Text = detainedCount.ToString()
             End If
         End If
 
@@ -64,6 +66,8 @@ Public Class frmMain
 #Region "===== Functions and Subroutines ====="
 
     Public Sub PullData()
+
+        'TODO: Currently imported from another project and needs to be modified for this application.
 
         Try
             Dim myText As String = My.Computer.FileSystem.ReadAllText(mfile)
@@ -134,6 +138,8 @@ Public Class frmMain
     End Sub
 
     Public Function RefreshFile(filepath As String) As String
+
+        'TODO: Currently imported from another project and needs to be modified for this application.
 
         Dim tempPath As String = Path.Combine(Path.GetDirectoryName(filepath),
                                               Path.GetFileNameWithoutExtension(filepath) & ".tmp" &
@@ -229,6 +235,28 @@ Public Class frmMain
 
         End Try
 
+    End Function
+
+    Public Function GetDetaineesCount() As Integer
+        Try
+            Dim myText As String = My.Computer.FileSystem.ReadAllText(mfile)
+            Dim mySentence() As String = Split(myText, vbCrLf)
+            Dim detained As Integer = 0  ' Counter for number of kids in Detention
+            For Each sentence As String In mySentence
+                If sentence.Contains(","c) Then
+                    detained += 1
+                End If
+            Next
+            Return detained
+
+        Catch ex As Exception
+            MessageBox.Show("An error occurred while counting detainees: " &
+                            ex.Message,
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error)
+            Return 0
+        End Try
     End Function
 
 #End Region
