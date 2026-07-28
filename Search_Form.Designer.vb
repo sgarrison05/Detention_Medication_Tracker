@@ -85,7 +85,7 @@ Partial Class frmSearch
         btnReturn.Name = "btnReturn"
         btnReturn.Size = New Size(75, 40)
         btnReturn.TabIndex = 6
-        btnReturn.Text = "Rtn Main"
+        btnReturn.Text = "Main"
         btnReturn.UseVisualStyleBackColor = False
         ' 
         ' frmSearch

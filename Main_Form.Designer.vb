@@ -66,6 +66,7 @@ Partial Class frmMain
         ' 
         ' txbChildName
         ' 
+        txbChildName.Enabled = False
         txbChildName.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         txbChildName.Location = New Point(25, 40)
         txbChildName.Name = "txbChildName"
