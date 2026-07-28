@@ -82,9 +82,9 @@ Partial Class frmAdd
         lblChildNameID.AutoSize = True
         lblChildNameID.Location = New Point(218, 16)
         lblChildNameID.Name = "lblChildNameID"
-        lblChildNameID.Size = New Size(73, 15)
+        lblChildNameID.Size = New Size(133, 15)
         lblChildNameID.TabIndex = 1
-        lblChildNameID.Text = "Child Name:"
+        lblChildNameID.Text = "Child Name (Last, First):"
         ' 
         ' cmbDetFacility
         ' 
@@ -92,7 +92,7 @@ Partial Class frmAdd
         cmbDetFacility.FormattingEnabled = True
         cmbDetFacility.Location = New Point(548, 37)
         cmbDetFacility.Name = "cmbDetFacility"
-        cmbDetFacility.Size = New Size(192, 29)
+        cmbDetFacility.Size = New Size(250, 29)
         cmbDetFacility.TabIndex = 2
         ' 
         ' lblDetentionID

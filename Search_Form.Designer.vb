@@ -26,7 +26,6 @@ Partial Class frmSearch
         txbCLastName = New TextBox()
         lblDisplay = New Label()
         btnEnter = New Button()
-        btnUpdate = New Button()
         btnClear = New Button()
         btnReturn = New Button()
         SuspendLayout()
@@ -69,20 +68,10 @@ Partial Class frmSearch
         btnEnter.Text = "Enter"
         btnEnter.UseVisualStyleBackColor = False
         ' 
-        ' btnUpdate
-        ' 
-        btnUpdate.BackColor = Color.Orange
-        btnUpdate.Location = New Point(107, 182)
-        btnUpdate.Name = "btnUpdate"
-        btnUpdate.Size = New Size(75, 40)
-        btnUpdate.TabIndex = 4
-        btnUpdate.Text = "Update"
-        btnUpdate.UseVisualStyleBackColor = False
-        ' 
         ' btnClear
         ' 
         btnClear.BackColor = SystemColors.ActiveBorder
-        btnClear.Location = New Point(205, 182)
+        btnClear.Location = New Point(107, 182)
         btnClear.Name = "btnClear"
         btnClear.Size = New Size(75, 40)
         btnClear.TabIndex = 5
@@ -92,7 +81,7 @@ Partial Class frmSearch
         ' btnReturn
         ' 
         btnReturn.BackColor = Color.Gold
-        btnReturn.Location = New Point(306, 182)
+        btnReturn.Location = New Point(208, 182)
         btnReturn.Name = "btnReturn"
         btnReturn.Size = New Size(75, 40)
         btnReturn.TabIndex = 6
@@ -108,7 +97,6 @@ Partial Class frmSearch
         ClientSize = New Size(597, 246)
         Controls.Add(btnReturn)
         Controls.Add(btnClear)
-        Controls.Add(btnUpdate)
         Controls.Add(btnEnter)
         Controls.Add(lblDisplay)
         Controls.Add(txbCLastName)
@@ -123,7 +111,6 @@ Partial Class frmSearch
     Friend WithEvents txbCLastName As TextBox
     Friend WithEvents lblDisplay As Label
     Friend WithEvents btnEnter As Button
-    Friend WithEvents btnUpdate As Button
     Friend WithEvents btnClear As Button
     Friend WithEvents btnReturn As Button
 End Class
