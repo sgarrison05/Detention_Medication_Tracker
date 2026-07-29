@@ -87,14 +87,35 @@
                                             ChildName.PadRight(20) & vbTab &
                                             Facility.PadRight(18) & vbTab &
                                             dteStart.ToShortDateString().PadRight(18) & vbTab &
-                                            Medication.PadRight(20) & vbTab &
+                                            txbMed1.Text.PadRight(20) & vbTab &
                                             txbStart1.Text.PadRight(10) & vbTab &
                                             txbDosage1.Text.PadRight(10) & vbTab &
                                             lblRemain1.Text.PadRight(10) & vbTab &
                                             lblDaysRemain1.Text.PadRight(10) & vbTab &
-                                            dtpReminderDate.PadRight(10) & vbTab &
-                                            dtpRunoutDate.PadRight(10) & vbTab &
-                                            txbNotes.Text & ControlChars.NewLine, True)
+                                            dtpReminderDate1.PadRight(10) & vbTab &
+                                            dtpRunoutDate1.PadRight(10) & vbTab &
+                                            txbNotes.Text & ControlChars.NewLine &
+                                            txbMed2.Text.PadRight(20) & vbTab &
+                                            txbStart2.Text.PadRight(10) & vbTab &
+                                            txbDosage2.Text.PadRight(10) & vbTab &
+                                            lblRemain2.Text.PadRight(10) & vbTab &
+                                            lblDaysRemain2.Text.PadRight(10) & vbTab &
+                                            dtpReminderDate2.PadRight(10) & vbTab &
+                                            dtpRunoutDate2.PadRight(10) & ControlChars.NewLine &
+                                            txbMed3.Text.PadRight(20) & vbTab &
+                                            txbStart3.Text.PadRight(10) & vbTab &
+                                            txbDosage3.Text.PadRight(10) & vbTab &
+                                            lblRemain2.Text.PadRight(10) & vbTab &
+                                            lblDaysRemain3.Text.PadRight(10) & vbTab &
+                                            dtpReminderDate3.PadRight(10) & vbTab &
+                                            dtpRunoutDate3.PadRight(10) & ControlChars.NewLine &
+                                            txbMed4.Text.PadRight(20) & vbTab &
+                                            txbStart4.Text.PadRight(10) & vbTab &
+                                            txbDosage4.Text.PadRight(10) & vbTab &
+                                            lblRemain4.Text.PadRight(10) & vbTab &
+                                            lblDaysRemain4.Text.PadRight(10) & vbTab &
+                                            dtpReminderDate4.PadRight(10) & vbTab &
+                                            dtpRunoutDate4.PadRight(10) & ControlChars.NewLine & True)
     End Sub
 
 #End Region
