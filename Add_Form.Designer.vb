@@ -414,7 +414,7 @@ Partial Class frmAdd
         ' btnClose
         ' 
         btnClose.BackColor = Color.Tomato
-        btnClose.Location = New Point(723, 399)
+        btnClose.Location = New Point(734, 399)
         btnClose.Name = "btnClose"
         btnClose.Size = New Size(75, 34)
         btnClose.TabIndex = 39
@@ -424,7 +424,7 @@ Partial Class frmAdd
         ' btnClear
         ' 
         btnClear.BackColor = Color.DeepSkyBlue
-        btnClear.Location = New Point(633, 399)
+        btnClear.Location = New Point(636, 399)
         btnClear.Name = "btnClear"
         btnClear.Size = New Size(75, 34)
         btnClear.TabIndex = 40
@@ -434,7 +434,7 @@ Partial Class frmAdd
         ' btnSave
         ' 
         btnSave.BackColor = Color.LawnGreen
-        btnSave.Location = New Point(529, 399)
+        btnSave.Location = New Point(536, 399)
         btnSave.Name = "btnSave"
         btnSave.Size = New Size(75, 34)
         btnSave.TabIndex = 41

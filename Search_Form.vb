@@ -10,6 +10,7 @@
 
     Private Sub frmSearch_Load(sender As Object, e As EventArgs) Handles Me.Load
 
+        lblDisplay.Text = "Ready"
         txbCLastName.Focus()
 
     End Sub
@@ -27,6 +28,32 @@
         Return String.Empty
 
     End Function
+
+    Private Sub PopulateEditForm(f As frmAdd, words() As String)
+
+        f.isEditMode = True
+
+        f.IncomingOriginalName = SafeWord(words, 0)
+
+        f.IncomingChildName = SafeWord(words, 0)
+        f.IncomingFacility = SafeWord(words, 1)
+        f.IncomingDateDetained = SafeWord(words, 2)
+        f.IncomingMedication = SafeWord(words, 3)
+
+        DetermineAndSetDate(f, words, StartIdx:=4, endIdx:=5)
+
+    End Sub
+
+    Private Sub DetermineAndSetDate(f As frmAdd, words() As String, StartIdx As Integer, endIdx As Integer)
+
+        ' Handle start date — may be "Pending" or blank
+        Dim startVal As String = SafeWord(words, StartIdx)
+        Dim parsedStart As DateTime
+
+        f.IncomingStartDate = DateTime.Today
+        f.IncomingEndDate = Date.Today.AddDays(10)
+
+    End Sub
 
     Private Sub FillLabel()
 
@@ -74,8 +101,8 @@
                     foundWords = words ' Store for potential use in edit form
 
                     'Put the words back together with padding for display on form
-                    display = String.Join(" ".PadRight(5), SafeWord(words, 0), SafeWord(words, 3),
-                                                              SafeWord(words, 4), SafeWord(words, 5))
+                    display = String.Join(" ".PadRight(5), SafeWord(words, 0), SafeWord(words, 1),
+                                                              SafeWord(words, 2), SafeWord(words, 3))
 
                     Exit For
                 End If
@@ -124,6 +151,19 @@
         frmMain.Show()
         Me.Close()
     End Sub
+
+    Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+
+        Using f As New frmAdd()
+            f.isEditMode = False
+            f.ShowDialog()
+        End Using
+
+        CleanForm()
+
+    End Sub
+
+
 
 #End Region
 

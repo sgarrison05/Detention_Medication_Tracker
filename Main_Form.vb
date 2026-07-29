@@ -17,7 +17,7 @@ Public Class frmMain
     Private ReadOnly title As String = "Detention Medication Tracker"
     Private dteToday As Date = Date.Today
     Private dteInitDetained As Date
-    Public Shared ReadOnly mdirectoy As String = Path.Combine("C:\", "Trackers")
+    Public Shared ReadOnly mdirectoy As String = Path.Combine("D:\Temp\", "Trackers")
     Public Shared ReadOnly mfile As String = Path.Combine(mdirectoy, "med_tracker.txt")
 
 #Region "===== Form Events ====="

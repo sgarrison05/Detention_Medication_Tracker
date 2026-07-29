@@ -28,6 +28,7 @@ Partial Class frmSearch
         btnEnter = New Button()
         btnClear = New Button()
         btnReturn = New Button()
+        btnAdd = New Button()
         SuspendLayout()
         ' 
         ' lblCLastNamID
@@ -71,7 +72,7 @@ Partial Class frmSearch
         ' btnClear
         ' 
         btnClear.BackColor = SystemColors.ActiveBorder
-        btnClear.Location = New Point(107, 182)
+        btnClear.Location = New Point(206, 182)
         btnClear.Name = "btnClear"
         btnClear.Size = New Size(75, 40)
         btnClear.TabIndex = 5
@@ -81,12 +82,22 @@ Partial Class frmSearch
         ' btnReturn
         ' 
         btnReturn.BackColor = Color.Gold
-        btnReturn.Location = New Point(208, 182)
+        btnReturn.Location = New Point(307, 182)
         btnReturn.Name = "btnReturn"
         btnReturn.Size = New Size(75, 40)
         btnReturn.TabIndex = 6
         btnReturn.Text = "Main"
         btnReturn.UseVisualStyleBackColor = False
+        ' 
+        ' btnAdd
+        ' 
+        btnAdd.BackColor = Color.Orange
+        btnAdd.Location = New Point(106, 182)
+        btnAdd.Name = "btnAdd"
+        btnAdd.Size = New Size(75, 40)
+        btnAdd.TabIndex = 7
+        btnAdd.Text = "Add"
+        btnAdd.UseVisualStyleBackColor = False
         ' 
         ' frmSearch
         ' 
@@ -95,6 +106,7 @@ Partial Class frmSearch
         AutoScaleMode = AutoScaleMode.Font
         CancelButton = btnClear
         ClientSize = New Size(597, 246)
+        Controls.Add(btnAdd)
         Controls.Add(btnReturn)
         Controls.Add(btnClear)
         Controls.Add(btnEnter)
@@ -113,4 +125,5 @@ Partial Class frmSearch
     Friend WithEvents btnEnter As Button
     Friend WithEvents btnClear As Button
     Friend WithEvents btnReturn As Button
+    Friend WithEvents btnAdd As Button
 End Class
