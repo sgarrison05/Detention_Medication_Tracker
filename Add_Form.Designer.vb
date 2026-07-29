@@ -47,14 +47,14 @@ Partial Class frmAdd
         Label6 = New Label()
         txbDosage1 = New TextBox()
         Label7 = New Label()
-        Label8 = New Label()
+        lblRemain1 = New Label()
         Label9 = New Label()
         Label10 = New Label()
         Label11 = New Label()
         Label12 = New Label()
         Label13 = New Label()
         Label14 = New Label()
-        Label15 = New Label()
+        lblDaysRemain1 = New Label()
         Label16 = New Label()
         txbRefill4 = New TextBox()
         txbRefill3 = New TextBox()
@@ -281,15 +281,15 @@ Partial Class frmAdd
         Label7.TabIndex = 24
         Label7.Text = "Pills " & vbCrLf & "Remaining:"
         ' 
-        ' Label8
+        ' lblRemain1
         ' 
-        Label8.BorderStyle = BorderStyle.FixedSingle
-        Label8.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        Label8.Location = New Point(548, 126)
-        Label8.Name = "Label8"
-        Label8.Size = New Size(59, 23)
-        Label8.TabIndex = 25
-        Label8.Text = "#"
+        lblRemain1.BorderStyle = BorderStyle.FixedSingle
+        lblRemain1.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        lblRemain1.Location = New Point(548, 126)
+        lblRemain1.Name = "lblRemain1"
+        lblRemain1.Size = New Size(59, 23)
+        lblRemain1.TabIndex = 25
+        lblRemain1.Text = "#"
         ' 
         ' Label9
         ' 
@@ -351,15 +351,15 @@ Partial Class frmAdd
         Label14.TabIndex = 31
         Label14.Text = "#"
         ' 
-        ' Label15
+        ' lblDaysRemain1
         ' 
-        Label15.BorderStyle = BorderStyle.FixedSingle
-        Label15.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        Label15.Location = New Point(649, 126)
-        Label15.Name = "Label15"
-        Label15.Size = New Size(59, 23)
-        Label15.TabIndex = 30
-        Label15.Text = "#"
+        lblDaysRemain1.BorderStyle = BorderStyle.FixedSingle
+        lblDaysRemain1.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        lblDaysRemain1.Location = New Point(649, 126)
+        lblDaysRemain1.Name = "lblDaysRemain1"
+        lblDaysRemain1.Size = New Size(59, 23)
+        lblDaysRemain1.TabIndex = 30
+        lblDaysRemain1.Text = "#"
         ' 
         ' Label16
         ' 
@@ -487,12 +487,12 @@ Partial Class frmAdd
         Controls.Add(Label12)
         Controls.Add(Label13)
         Controls.Add(Label14)
-        Controls.Add(Label15)
+        Controls.Add(lblDaysRemain1)
         Controls.Add(Label16)
         Controls.Add(Label11)
         Controls.Add(Label10)
         Controls.Add(Label9)
-        Controls.Add(Label8)
+        Controls.Add(lblRemain1)
         Controls.Add(Label7)
         Controls.Add(txbDosage4)
         Controls.Add(txbDosage3)
@@ -549,14 +549,14 @@ Partial Class frmAdd
     Friend WithEvents Label6 As Label
     Friend WithEvents txbDosage1 As TextBox
     Friend WithEvents Label7 As Label
-    Friend WithEvents Label8 As Label
+    Friend WithEvents lblRemain1 As Label
     Friend WithEvents Label9 As Label
     Friend WithEvents Label10 As Label
     Friend WithEvents Label11 As Label
     Friend WithEvents Label12 As Label
     Friend WithEvents Label13 As Label
     Friend WithEvents Label14 As Label
-    Friend WithEvents Label15 As Label
+    Friend WithEvents lblDaysRemain1 As Label
     Friend WithEvents Label16 As Label
     Friend WithEvents txbRefill4 As TextBox
     Friend WithEvents txbRefill3 As TextBox

@@ -17,12 +17,85 @@
     Private dteEnd As Date
 #Region "=============== Main Form Events ================"
 
+    Private Sub frmAdd_Load(sender As Object, e As EventArgs) Handles Me.Load
+
+        RefillCombo()
+        FillData()
+
+    End Sub
+
 #End Region
 
 #Region "============== Functions and Subroutines =============="
 
     ' TODO: Create FillData(), Create Entry(), WriteDataLine(), and WriteHeader() Subroutines
     ' to fill form fields with data
+
+    Private Sub FillData()
+
+        dteStart = CDate(dtpDetStart.Value)
+        dteEnd = dteStart.AddDays(10)
+
+    End Sub
+
+    Private Sub RefillCombo()
+
+        cmbDetFacility.Items.Add("[Select/Enter Facility]")
+        cmbDetFacility.Items.Add("Minnie Rogers")
+        cmbDetFacility.Items.Add("Hardin County")
+        cmbDetFacility.Items.Add("Montgomery County")
+        cmbDetFacility.Items.Add("Galveston County")
+        cmbDetFacility.Items.Add("Ft. Bend County")
+        cmbDetFacility.Items.Add("Angelina County")
+        cmbDetFacility.Items.Add("Gregg County")
+        cmbDetFacility.Items.Add("Victoria County")
+        cmbDetFacility.Items.Add("Nueches County")
+        cmbDetFacility.SelectedIndex = 0
+
+    End Sub
+
+    Private Sub WriteHeader(filepath As String)
+
+        My.Computer.FileSystem.WriteAllText(filepath,
+                                            "Child Name:".PadRight(20) & vbTab &
+                                            "Detention Facility:" & vbTab &
+                                            "Date Detained:" & vbTab &
+                                            "Medication:" & vbTab &
+                                            "# Pills Started:" & vbTab &
+                                            "Daily Dosage:" & vbTab &
+                                            "# Pills Remaining:" & vbTab &
+                                            "# Days Remaining:" & vbTab &
+                                            "Reminder Date:" & vbTab &
+                                            "Runout Date:" & vbTab &
+                                            "Notes:" & vbCrLf &
+                                            "-----------".PadRight(20) & vbTab &
+                                            "---------------".PadRight(18) & vbTab &
+                                            "------------".PadRight(18) & vbTab &
+                                            "--------------".PadRight(20) & vbTab &
+                                            "----------" & vbTab &
+                                            "----------" & vbTab &
+                                            "----------" & vbTab &
+                                            "----------" & vbTab &
+                                            "----------".PadRight(14) & vbTab &
+                                            "----------" & vbTab &
+                                            "----------" & ControlChars.NewLine, True)
+
+    End Sub
+
+    Private Sub WriteDataLine(filepath As String)
+        My.Computer.FileSystem.WriteAllText(filepath,
+                                            ChildName.PadRight(20) & vbTab &
+                                            Facility.PadRight(18) & vbTab &
+                                            dteStart.ToShortDateString().PadRight(18) & vbTab &
+                                            Medication.PadRight(20) & vbTab &
+                                            txbStart1.Text.PadRight(10) & vbTab &
+                                            txbDosage1.Text.PadRight(10) & vbTab &
+                                            lblRemain1.Text.PadRight(10) & vbTab &
+                                            lblDaysRemain1.Text.PadRight(10) & vbTab &
+                                            dtpReminderDate.PadRight(10) & vbTab &
+                                            dtpRunoutDate.PadRight(10) & vbTab &
+                                            txbNotes.Text & ControlChars.NewLine, True)
+    End Sub
 
 #End Region
 
@@ -55,6 +128,7 @@
         ' TODO: ClearForm() function to clear all input fields
 
     End Sub
+
 
 #End Region
 
