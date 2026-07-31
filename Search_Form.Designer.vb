@@ -29,6 +29,8 @@ Partial Class frmSearch
         btnClear = New Button()
         btnReturn = New Button()
         btnAdd = New Button()
+        lblDetentionID = New Label()
+        TextBox1 = New TextBox()
         SuspendLayout()
         ' 
         ' lblCLastNamID
@@ -99,6 +101,23 @@ Partial Class frmSearch
         btnAdd.Text = "Add"
         btnAdd.UseVisualStyleBackColor = False
         ' 
+        ' lblDetentionID
+        ' 
+        lblDetentionID.AutoSize = True
+        lblDetentionID.Location = New Point(351, 11)
+        lblDetentionID.Name = "lblDetentionID"
+        lblDetentionID.Size = New Size(102, 15)
+        lblDetentionID.TabIndex = 8
+        lblDetentionID.Text = "Detention Facility:"
+        ' 
+        ' TextBox1
+        ' 
+        TextBox1.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        TextBox1.Location = New Point(351, 29)
+        TextBox1.Name = "TextBox1"
+        TextBox1.Size = New Size(234, 29)
+        TextBox1.TabIndex = 9
+        ' 
         ' frmSearch
         ' 
         AcceptButton = btnEnter
@@ -106,6 +125,8 @@ Partial Class frmSearch
         AutoScaleMode = AutoScaleMode.Font
         CancelButton = btnClear
         ClientSize = New Size(597, 246)
+        Controls.Add(TextBox1)
+        Controls.Add(lblDetentionID)
         Controls.Add(btnAdd)
         Controls.Add(btnReturn)
         Controls.Add(btnClear)
@@ -126,4 +147,6 @@ Partial Class frmSearch
     Friend WithEvents btnClear As Button
     Friend WithEvents btnReturn As Button
     Friend WithEvents btnAdd As Button
+    Friend WithEvents lblDetentionID As Label
+    Friend WithEvents TextBox1 As TextBox
 End Class

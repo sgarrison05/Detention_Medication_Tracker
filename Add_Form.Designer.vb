@@ -299,7 +299,7 @@ Partial Class frmAdd
         lblRemain2.Name = "lblRemain2"
         lblRemain2.Size = New Size(59, 23)
         lblRemain2.TabIndex = 26
-        lblRemain2.Text = "#"
+        lblRemain2.Text = "r"
         ' 
         ' lblRemain3
         ' 

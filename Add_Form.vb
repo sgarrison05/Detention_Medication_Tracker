@@ -28,10 +28,19 @@
 
 #Region "============== Functions and Subroutines =============="
 
-    ' TODO: Create FillData(), Create Entry(), WriteDataLine(), and WriteHeader() Subroutines
-    ' to fill form fields with data
+    ' TODO: Create Calculations for Date Runout and Reminder based on Start Date and # of Pills
 
     Private Sub FillData()
+
+        If isEditMode Then
+            txbChildName.Text = IncomingChildName
+            cmbDetFacility.SelectedItem = IncomingFacility
+            dtpDetStart.Value = IncomingDateDetained
+            txbMed1.Text = IncomingMedication
+        Else
+            ClearForm()
+            txbChildName.Text = IncomingChildName
+        End If
 
         dteStart = CDate(dtpDetStart.Value)
         dteEnd = dteStart.AddDays(10)
@@ -83,6 +92,9 @@
     End Sub
 
     Private Sub WriteDataLine(filepath As String)
+
+        CalculateRunoutAndReminder()
+
         My.Computer.FileSystem.WriteAllText(filepath,
                                             ChildName.PadRight(20) & vbTab &
                                             Facility.PadRight(18) & vbTab &
@@ -115,7 +127,87 @@
                                             lblRemain4.Text.PadRight(10) & vbTab &
                                             lblDaysRemain4.Text.PadRight(10) & vbTab &
                                             dtpReminderDate4.PadRight(10) & vbTab &
-                                            dtpRunoutDate4.PadRight(10) & ControlChars.NewLine & True)
+                                            dtpRunoutDate4.PadRight(10) & ControlChars.NewLine, True)
+    End Sub
+
+    Private Sub CreateEntry()
+
+        If String.IsNullOrWhiteSpace(txbChildName.Text) Then
+            MessageBox.Show("Please enter a child name.",
+                    "Entry", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            txbChildName.Focus()
+            Return
+        End If
+
+        ' Assign field values to variables
+        ChildName = txbChildName.Text
+
+        Dim targetFile As String = frmMain.mfile
+
+        Try
+
+            If My.Computer.FileSystem.FileExists(targetFile) Then
+
+                WriteDataLine(targetFile)
+
+            Else
+
+                'Creates the Directory/File and writes the header and first line of data
+                My.Computer.FileSystem.CreateDirectory(frmMain.mdirectory)
+                WriteHeader(targetFile)
+                WriteDataLine(targetFile)
+
+            End If
+
+            ' Confirm successful save to user
+            MessageBox.Show("Record for " & ChildName & " has been saved.",
+                            "Entry", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            ClearForm()
+
+
+        Catch ex As Exception
+
+            MessageBox.Show("Error Saving Record: " & ex.Message,
+                            "Entry", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+        End Try
+
+    End Sub
+
+    Private Sub ClearForm()
+
+        txbChildName.Clear()
+        cmbDetFacility.SelectedIndex = 0
+        dtpDetStart.Value = DateTime.Today()
+        txbMed1.Clear()
+        txbMed2.Clear()
+        txbMed3.Clear()
+        txbMed4.Clear()
+        txbStart1.Clear()
+        txbStart2.Clear()
+        txbStart3.Clear()
+        txbStart4.Clear()
+        txbDosage1.Clear()
+        txbDosage2.Clear()
+        txbDosage3.Clear()
+        txbDosage4.Clear()
+        lblRemain1.Text = String.Empty
+        lblRemain2.Text = String.Empty
+        lblRemain3.Text = String.Empty
+        lblRemain4.Text = String.Empty
+        lblDaysRemain1.Text = String.Empty
+        lblDaysRemain2.Text = String.Empty
+        lblDaysRemain3.Text = String.Empty
+        lblDaysRemain4.Text = String.Empty
+        txbNotes.Clear()
+
+    End Sub
+
+    Private Sub CalculateRunoutAndReminder()
+
+
+
     End Sub
 
 #End Region

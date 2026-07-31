@@ -17,14 +17,14 @@ Public Class frmMain
     Private ReadOnly title As String = "Detention Medication Tracker"
     Private dteToday As Date = Date.Today
     Private dteInitDetained As Date
-    Public Shared ReadOnly mdirectoy As String = Path.Combine("D:\Temp\", "Trackers")
-    Public Shared ReadOnly mfile As String = Path.Combine(mdirectoy, "med_tracker.txt")
+    Public Shared ReadOnly mdirectory As String = Path.Combine("D:\Temp\", "Trackers")
+    Public Shared ReadOnly mfile As String = Path.Combine(mdirectory, "med_tracker.txt")
 
 #Region "===== Form Events ====="
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-        Dim dteDetained As Date
+        Dim dteDetained As Date = frmAdd.dtpDetStart.Value
         Dim dteRunout As Date
         Dim dteReminder As Date = dteRunout.AddDays(-7)
 
@@ -40,7 +40,7 @@ Public Class frmMain
                                      MessageBoxDefaultButton.Button1)
 
             If button = DialogResult.Yes Then
-                Directory.CreateDirectory(mdirectoy)
+                Directory.CreateDirectory(mdirectory)
                 Me.Hide()
                 Using f As New frmAdd()
                     f.ShowDialog()
@@ -273,6 +273,9 @@ Public Class frmMain
 
         'TODO: Pull Date Detained and Date Runout from text file and assign to dteDetained
         'and dteRunout variables once a child is named and exists.
+
+        frmSearch.ShowDialog()
+        Me.Close()
 
     End Sub
 
