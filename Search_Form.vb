@@ -109,7 +109,8 @@
             Next
 
             ' Prefix result with record type for context
-            Dim recordType As String = "[" & facility & "]" & Strings.Space(5)
+            Dim recordType As String = txbCLastName & words(1) &
+                                       "[" & txbFacility.Text & "]" & Strings.Space(5)
 
             If String.IsNullOrEmpty(display) Then
                 lblDisplay.Text = "Name not found."
@@ -127,6 +128,7 @@
     Private Sub CleanForm()
 
         txbCLastName.Clear()
+        txbFacility.Clear()
         lblDisplay.Text = String.Empty
         foundWords = Nothing
         txbCLastName.Focus()

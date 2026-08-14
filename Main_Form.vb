@@ -58,7 +58,6 @@ Public Class frmMain
         End If
 
 
-
     End Sub
 
 #End Region
@@ -74,7 +73,7 @@ Public Class frmMain
             Dim mySentence() As String = Split(myText, vbCrLf)
             Dim listing As Integer = 0  ' Counter for each record
             Dim detained As Integer = 0  ' Counter for number of kids in Detention
-            Dim childName As String = Me.txbChildName.Text
+            Dim childName As String = Me.lblChildName.Text
             Dim dteDetained As Date
             Dim dteReminder As Date
             Dim dteRunout As Date

@@ -30,7 +30,9 @@ Partial Class frmSearch
         btnReturn = New Button()
         btnAdd = New Button()
         lblDetentionID = New Label()
-        TextBox1 = New TextBox()
+        txbFacility = New TextBox()
+        lblNKID = New Label()
+        lblNKIDID = New Label()
         SuspendLayout()
         ' 
         ' lblCLastNamID
@@ -59,12 +61,12 @@ Partial Class frmSearch
         lblDisplay.Name = "lblDisplay"
         lblDisplay.Size = New Size(573, 75)
         lblDisplay.TabIndex = 2
-        lblDisplay.Text = "[Facility] [Child Full Name] [Initial Date Detained]"
+        lblDisplay.Text = "[Child Full Name] [Initial Date Detained] [Facility]"
         ' 
         ' btnEnter
         ' 
         btnEnter.BackColor = Color.LimeGreen
-        btnEnter.Location = New Point(10, 182)
+        btnEnter.Location = New Point(10, 234)
         btnEnter.Name = "btnEnter"
         btnEnter.Size = New Size(75, 40)
         btnEnter.TabIndex = 3
@@ -74,7 +76,7 @@ Partial Class frmSearch
         ' btnClear
         ' 
         btnClear.BackColor = SystemColors.ActiveBorder
-        btnClear.Location = New Point(206, 182)
+        btnClear.Location = New Point(206, 234)
         btnClear.Name = "btnClear"
         btnClear.Size = New Size(75, 40)
         btnClear.TabIndex = 5
@@ -84,7 +86,7 @@ Partial Class frmSearch
         ' btnReturn
         ' 
         btnReturn.BackColor = Color.Gold
-        btnReturn.Location = New Point(307, 182)
+        btnReturn.Location = New Point(307, 234)
         btnReturn.Name = "btnReturn"
         btnReturn.Size = New Size(75, 40)
         btnReturn.TabIndex = 6
@@ -94,7 +96,7 @@ Partial Class frmSearch
         ' btnAdd
         ' 
         btnAdd.BackColor = Color.Orange
-        btnAdd.Location = New Point(106, 182)
+        btnAdd.Location = New Point(106, 234)
         btnAdd.Name = "btnAdd"
         btnAdd.Size = New Size(75, 40)
         btnAdd.TabIndex = 7
@@ -110,13 +112,33 @@ Partial Class frmSearch
         lblDetentionID.TabIndex = 8
         lblDetentionID.Text = "Detention Facility:"
         ' 
-        ' TextBox1
+        ' txbFacility
         ' 
-        TextBox1.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        TextBox1.Location = New Point(351, 29)
-        TextBox1.Name = "TextBox1"
-        TextBox1.Size = New Size(234, 29)
-        TextBox1.TabIndex = 9
+        txbFacility.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        txbFacility.Location = New Point(351, 29)
+        txbFacility.Name = "txbFacility"
+        txbFacility.Size = New Size(234, 29)
+        txbFacility.TabIndex = 9
+        ' 
+        ' lblNKID
+        ' 
+        lblNKID.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        lblNKID.Location = New Point(27, 180)
+        lblNKID.Name = "lblNKID"
+        lblNKID.Size = New Size(100, 23)
+        lblNKID.TabIndex = 11
+        lblNKID.Text = "# Kids"
+        lblNKID.TextAlign = ContentAlignment.MiddleCenter
+        ' 
+        ' lblNKIDID
+        ' 
+        lblNKIDID.AutoSize = True
+        lblNKIDID.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        lblNKIDID.Location = New Point(16, 165)
+        lblNKIDID.Name = "lblNKIDID"
+        lblNKIDID.Size = New Size(136, 15)
+        lblNKIDID.TabIndex = 10
+        lblNKIDID.Text = "Total Kids in Detention:" & vbCrLf
         ' 
         ' frmSearch
         ' 
@@ -124,8 +146,10 @@ Partial Class frmSearch
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         CancelButton = btnClear
-        ClientSize = New Size(597, 246)
-        Controls.Add(TextBox1)
+        ClientSize = New Size(597, 295)
+        Controls.Add(lblNKID)
+        Controls.Add(lblNKIDID)
+        Controls.Add(txbFacility)
         Controls.Add(lblDetentionID)
         Controls.Add(btnAdd)
         Controls.Add(btnReturn)
@@ -148,5 +172,7 @@ Partial Class frmSearch
     Friend WithEvents btnReturn As Button
     Friend WithEvents btnAdd As Button
     Friend WithEvents lblDetentionID As Label
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents txbFacility As TextBox
+    Friend WithEvents lblNKID As Label
+    Friend WithEvents lblNKIDID As Label
 End Class

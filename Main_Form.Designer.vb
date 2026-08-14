@@ -24,10 +24,7 @@ Partial Class frmMain
     Private Sub InitializeComponent()
         lblListing = New Label()
         lblListingID = New Label()
-        txbChildName = New TextBox()
         lblChildNameID = New Label()
-        lblNKIDID = New Label()
-        lblNKID = New Label()
         btnAdd = New Button()
         btnUpdate = New Button()
         btnSearch = New Button()
@@ -41,6 +38,7 @@ Partial Class frmMain
         Label2 = New Label()
         lblDateToday = New Label()
         lblTodayID = New Label()
+        lblChildName = New Label()
         SuspendLayout()
         ' 
         ' lblListing
@@ -60,18 +58,9 @@ Partial Class frmMain
         lblListingID.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lblListingID.Location = New Point(25, 93)
         lblListingID.Name = "lblListingID"
-        lblListingID.Size = New Size(122, 15)
+        lblListingID.Size = New Size(187, 15)
         lblListingID.TabIndex = 1
-        lblListingID.Text = "Current Child Listing:" & vbCrLf
-        ' 
-        ' txbChildName
-        ' 
-        txbChildName.Enabled = False
-        txbChildName.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        txbChildName.Location = New Point(25, 40)
-        txbChildName.Name = "txbChildName"
-        txbChildName.Size = New Size(300, 29)
-        txbChildName.TabIndex = 2
+        lblListingID.Text = "Current Child Medication Listing:" & vbCrLf
         ' 
         ' lblChildNameID
         ' 
@@ -82,26 +71,6 @@ Partial Class frmMain
         lblChildNameID.Size = New Size(73, 15)
         lblChildNameID.TabIndex = 3
         lblChildNameID.Text = "Child Name:"
-        ' 
-        ' lblNKIDID
-        ' 
-        lblNKIDID.AutoSize = True
-        lblNKIDID.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        lblNKIDID.Location = New Point(25, 251)
-        lblNKIDID.Name = "lblNKIDID"
-        lblNKIDID.Size = New Size(136, 15)
-        lblNKIDID.TabIndex = 4
-        lblNKIDID.Text = "Total Kids in Detention:" & vbCrLf
-        ' 
-        ' lblNKID
-        ' 
-        lblNKID.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        lblNKID.Location = New Point(37, 266)
-        lblNKID.Name = "lblNKID"
-        lblNKID.Size = New Size(100, 23)
-        lblNKID.TabIndex = 5
-        lblNKID.Text = "# Kids"
-        lblNKID.TextAlign = ContentAlignment.MiddleCenter
         ' 
         ' btnAdd
         ' 
@@ -231,6 +200,16 @@ Partial Class frmMain
         lblTodayID.Text = "Today's Date:"
         lblTodayID.TextAlign = ContentAlignment.MiddleCenter
         ' 
+        ' lblChildName
+        ' 
+        lblChildName.Font = New Font("Segoe UI", 12F)
+        lblChildName.Location = New Point(25, 42)
+        lblChildName.Name = "lblChildName"
+        lblChildName.Size = New Size(316, 23)
+        lblChildName.TabIndex = 23
+        lblChildName.Text = "ChildName"
+        lblChildName.TextAlign = ContentAlignment.MiddleLeft
+        ' 
         ' frmMain
         ' 
         AcceptButton = btnAdd
@@ -238,6 +217,7 @@ Partial Class frmMain
         AutoScaleMode = AutoScaleMode.Font
         CancelButton = btnClose
         ClientSize = New Size(866, 365)
+        Controls.Add(lblChildName)
         Controls.Add(lblDateToday)
         Controls.Add(lblTodayID)
         Controls.Add(Label1)
@@ -251,10 +231,7 @@ Partial Class frmMain
         Controls.Add(btnSearch)
         Controls.Add(btnUpdate)
         Controls.Add(btnAdd)
-        Controls.Add(lblNKID)
-        Controls.Add(lblNKIDID)
         Controls.Add(lblChildNameID)
-        Controls.Add(txbChildName)
         Controls.Add(lblListingID)
         Controls.Add(lblListing)
         Font = New Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
@@ -268,10 +245,7 @@ Partial Class frmMain
 
     Friend WithEvents lblListing As Label
     Friend WithEvents lblListingID As Label
-    Friend WithEvents txbChildName As TextBox
     Friend WithEvents lblChildNameID As Label
-    Friend WithEvents lblNKIDID As Label
-    Friend WithEvents lblNKID As Label
     Friend WithEvents btnAdd As Button
     Friend WithEvents btnUpdate As Button
     Friend WithEvents btnSearch As Button
@@ -285,5 +259,6 @@ Partial Class frmMain
     Friend WithEvents Label2 As Label
     Friend WithEvents lblDateToday As Label
     Friend WithEvents lblTodayID As Label
+    Friend WithEvents lblChildName As Label
 
 End Class

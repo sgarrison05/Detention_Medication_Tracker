@@ -10,11 +10,21 @@
     Public Property IncomingPills As Integer = 0
     Public Property isEditMode As Boolean = False 'False = Add Mode, True = Edit Mode
 
-    Public ChildName As String
-    Public Facility As String
-    Public Medication As String
-    Private dteStart As Date
+    Private childName As String
+    Private dteStart As Date = dtpDetStart.Value
     Private dteEnd As Date
+    Private medication(4) As String
+    Private pillsStarted(4) As Integer
+    Private dailyDosage(4) As Integer
+    Private reminderDate As Date
+    Private reminderDate2 As Date
+    Private reminderDate3 As Date
+    Private reminderDate4 As Date
+    Private runoutDate As Date
+    Private runoutDate2 As Date
+    Private runoutDate3 As Date
+    Private runoutDate4 As Date
+
 #Region "=============== Main Form Events ================"
 
     Private Sub frmAdd_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -37,6 +47,23 @@
             cmbDetFacility.SelectedItem = IncomingFacility
             dtpDetStart.Value = IncomingDateDetained
             txbMed1.Text = IncomingMedication
+            txbMed2.Text = Nothing
+            txbMed3.Text = Nothing
+            txbMed4.Text = Nothing
+            txbStart1.Text = IncomingPills.ToString()
+            txbStart2.Text = Nothing
+            txbStart3.Text = Nothing
+            txbStart4.Text = Nothing
+            txbDosage1.Text = "1"
+            txbDosage2.Text = "1"
+            txbDosage3.Text = "1"
+            txbDosage4.Text = "1"
+            txbRefill1.Text = "0"
+            txbRefill2.Text = "0"
+            txbRefill3.Text = "0"
+            txbRefill4.Text = "0"
+            txbNotes.Text = Nothing
+
         Else
             ClearForm()
             txbChildName.Text = IncomingChildName
@@ -95,8 +122,10 @@
 
         CalculateRunoutAndReminder()
 
+        Dim Facility As String = cmbDetFacility.SelectedItem.ToString()
+
         My.Computer.FileSystem.WriteAllText(filepath,
-                                            ChildName.PadRight(20) & vbTab &
+                                            childName.PadRight(20) & vbTab &
                                             Facility.PadRight(18) & vbTab &
                                             dteStart.ToShortDateString().PadRight(18) & vbTab &
                                             txbMed1.Text.PadRight(20) & vbTab &
@@ -104,30 +133,30 @@
                                             txbDosage1.Text.PadRight(10) & vbTab &
                                             lblRemain1.Text.PadRight(10) & vbTab &
                                             lblDaysRemain1.Text.PadRight(10) & vbTab &
-                                            dtpReminderDate1.PadRight(10) & vbTab &
-                                            dtpRunoutDate1.PadRight(10) & vbTab &
+                                            reminderDate.ToString.PadRight(10) & vbTab &
+                                            runoutDate.ToString.PadRight(10) & vbTab &
                                             txbNotes.Text & ControlChars.NewLine &
                                             txbMed2.Text.PadRight(20) & vbTab &
                                             txbStart2.Text.PadRight(10) & vbTab &
                                             txbDosage2.Text.PadRight(10) & vbTab &
                                             lblRemain2.Text.PadRight(10) & vbTab &
                                             lblDaysRemain2.Text.PadRight(10) & vbTab &
-                                            dtpReminderDate2.PadRight(10) & vbTab &
-                                            dtpRunoutDate2.PadRight(10) & ControlChars.NewLine &
+                                            reminderDate2.ToString.PadRight(10) & vbTab &
+                                            runoutDate2.ToString.PadRight(10) & ControlChars.NewLine &
                                             txbMed3.Text.PadRight(20) & vbTab &
                                             txbStart3.Text.PadRight(10) & vbTab &
                                             txbDosage3.Text.PadRight(10) & vbTab &
                                             lblRemain2.Text.PadRight(10) & vbTab &
                                             lblDaysRemain3.Text.PadRight(10) & vbTab &
-                                            dtpReminderDate3.PadRight(10) & vbTab &
-                                            dtpRunoutDate3.PadRight(10) & ControlChars.NewLine &
+                                            reminderDate3.ToString.PadRight(10) & vbTab &
+                                            runoutDate3.ToString.PadRight(10) & ControlChars.NewLine &
                                             txbMed4.Text.PadRight(20) & vbTab &
                                             txbStart4.Text.PadRight(10) & vbTab &
                                             txbDosage4.Text.PadRight(10) & vbTab &
                                             lblRemain4.Text.PadRight(10) & vbTab &
                                             lblDaysRemain4.Text.PadRight(10) & vbTab &
-                                            dtpReminderDate4.PadRight(10) & vbTab &
-                                            dtpRunoutDate4.PadRight(10) & ControlChars.NewLine, True)
+                                            reminderDate4.ToString.PadRight(10) & vbTab &
+                                            runoutDate4.ToString.PadRight(10) & ControlChars.NewLine, True)
     End Sub
 
     Private Sub CreateEntry()
@@ -206,7 +235,7 @@
 
     Private Sub CalculateRunoutAndReminder()
 
-
+        'TODO: calculations for each medication
 
     End Sub
 
