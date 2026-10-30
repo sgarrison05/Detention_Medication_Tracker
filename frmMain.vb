@@ -17,7 +17,7 @@ Public Class frmMain
 
     Private Const APP_TITLE As String = "Detention Medication Tracker"
 
-    Private Const DATA_FOLDER As String = "C:\DetentionMedicationTracker"
+    Private Const DATA_FOLDER As String = "D:\Temp\DetentionMedicationTracker"
     Private Const DATA_FILE As String = DATA_FOLDER & "\MedicationTracker.txt"
 
     Private Const DATE_FORMAT As String = "MM-dd-yyyy"
