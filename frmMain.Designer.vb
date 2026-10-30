@@ -573,9 +573,9 @@ Partial Class frmMain
         lblEarlyRemCaption.AutoSize = True
         lblEarlyRemCaption.Location = New System.Drawing.Point(12, 28)
         lblEarlyRemCaption.Name = "lblEarlyRemCaption"
-        lblEarlyRemCaption.Size = New System.Drawing.Size(128, 15)
+        lblEarlyRemCaption.Size = New System.Drawing.Size(102, 15)
         lblEarlyRemCaption.TabIndex = 0
-        lblEarlyRemCaption.Text = "Earliest Reminder Date:"
+        lblEarlyRemCaption.Text = "Date of Reminder:"
         ' 
         ' lblEarlyRemValue
         ' 
@@ -590,9 +590,9 @@ Partial Class frmMain
         lblEarlyRunCaption.AutoSize = True
         lblEarlyRunCaption.Location = New System.Drawing.Point(12, 58)
         lblEarlyRunCaption.Name = "lblEarlyRunCaption"
-        lblEarlyRunCaption.Size = New System.Drawing.Size(121, 15)
+        lblEarlyRunCaption.Size = New System.Drawing.Size(90, 15)
         lblEarlyRunCaption.TabIndex = 2
-        lblEarlyRunCaption.Text = "Earliest Run-out Date:"
+        lblEarlyRunCaption.Text = "Date of Runout:"
         ' 
         ' lblEarlyRunValue
         ' 

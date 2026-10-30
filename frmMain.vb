@@ -34,6 +34,7 @@ Public Class frmMain
     ' The calculated medication columns (pills remain, days remaining, reminder date, run-out date) show the values
     ' as of the day the file was last written. The app recalculates them itself and never reads them back.
     Private Const C_ID As Integer = 0
+
     Private Const C_NAME As Integer = 1
     Private Const C_FACILITY As Integer = 2
     Private Const C_START As Integer = 3
@@ -72,7 +73,9 @@ Public Class frmMain
     ' Oldest layout: one line per child with all four medications. Still readable; rewritten in the current
     ' layout the next time the file is saved.
     Private Const LEGACY_MED_FIRST As Integer = 5
+
     Private Const LEGACY_NOTES As Integer = 17
+
     Private Shared ReadOnly LEGACY_TITLES As String() = New String() {
         "ID", "CHILD NAME", "FACILITY", "START DATE", "REFILLS",
         "M1 NAME", "M1 PILLS", "M1 DOSE",
@@ -120,6 +123,7 @@ Public Class frmMain
             Next
             Return False
         End Function
+
     End Class
 
     ' Where the columns sit in one version of the data file (found by title in the header row).
@@ -170,6 +174,7 @@ Public Class frmMain
 
     ' The four medication rows, as arrays so they can be processed in loops.
     Private _medName As TextBox()
+
     Private _medPills As NumericUpDown()
     Private _medDose As NumericUpDown()
     Private _medRefills As TextBox()
@@ -1035,7 +1040,6 @@ Public Class frmMain
             File.Copy(tempFile, DATA_FILE, True)
             File.Delete(tempFile)
             Return True
-
         Catch ex As Exception
             MessageBox.Show("Could not write the data file " & DATA_FILE & "." & vbCrLf & vbCrLf & ex.Message,
                             APP_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error)
