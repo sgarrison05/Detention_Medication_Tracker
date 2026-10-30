@@ -25,31 +25,52 @@ Public Class frmMain
     Private Const MED_COUNT As Integer = 4
     Private Const REMINDER_DAYS As Integer = 7          ' Reminder falls this many days before the run-out date
     Private Const GAP_TEXT As String = "  "              ' Two spaces between file columns
-    Private Const RULE_WIDTH As Integer = 150          ' Length of the dashed rule lines in the data file
+    Private Const RULE_WIDTH As Integer = 200          ' Length of the dashed rule lines in the data file
 
     ' ----- Data file layout -----
     ' One block per person. The first line of a block holds the case information, the first medication and the
     ' notes. Each additional medication gets its own line, indented so it lines up under the first medication's
     ' columns. A rule line of dashes follows every person.
+    ' The calculated medication columns (pills remain, days remaining, reminder date, run-out date) show the values
+    ' as of the day the file was last written. The app recalculates them itself and never reads them back.
     Private Const C_ID As Integer = 0
     Private Const C_NAME As Integer = 1
     Private Const C_FACILITY As Integer = 2
     Private Const C_START As Integer = 3
-    Private Const C_REFILLS As Integer = 4
-    Private Const C_MED_NAME As Integer = 5
-    Private Const C_MED_PILLS As Integer = 6
-    Private Const C_MED_DOSE As Integer = 7
-    Private Const C_NOTES As Integer = 8      ' Runs to the end of the line
+    Private Const C_MED_NAME As Integer = 4
+    Private Const C_MED_PILLS As Integer = 5
+    Private Const C_MED_DOSE As Integer = 6
+    Private Const C_MED_REMAIN As Integer = 7
+    Private Const C_MED_DAYS As Integer = 8
+    Private Const C_MED_REMINDER As Integer = 9
+    Private Const C_MED_RUNOUT As Integer = 10
+    Private Const C_MED_REFILLS As Integer = 11
+    Private Const C_NOTES As Integer = 12                          ' Runs to the end of the line
+    Private Const MED_COLUMNS As Integer = C_NOTES - C_MED_NAME    ' Columns that make up one medication
 
     Private Shared ReadOnly COL_TITLES As String() = New String() {
+        "ID", "CHILD NAME", "FACILITY", "START DATE",
+        "NAME OF MEDICATION", "PILLS", "DOSE",
+        "PILLS REMAIN", "DAYS REMAINING", "REMINDER DATE", "RUN-OUT DATE", "REFILLS",
+        "NOTES"}
+
+    ' Widths of columns 0-11 (the notes column has no fixed width). Each title must fit inside its column.
+    Private Shared ReadOnly COL_WIDTHS As Integer() = New Integer() {9, 25, 25, 10, 20, 8, 7, 12, 14, 13, 13, 7}
+
+    ' Layout used just before refills moved to the end: REFILLS sat right after DOSE.
+    Private Shared ReadOnly PREVIOUS_TITLES As String() = New String() {
+        "ID", "CHILD NAME", "FACILITY", "START DATE",
+        "NAME OF MEDICATION", "PILLS", "DOSE", "REFILLS",
+        "PILLS REMAIN", "DAYS REMAINING", "REMINDER DATE", "RUN-OUT DATE",
+        "NOTES"}
+
+    ' Earlier layout: medication on its own line, but one REFILLS value for the whole person and no calculated columns.
+    Private Shared ReadOnly PRIOR_TITLES As String() = New String() {
         "ID", "CHILD NAME", "FACILITY", "START DATE", "REFILLS",
         "NAME OF MEDICATION", "PILLS", "DOSE", "NOTES"}
 
-    ' Widths of columns 0-7 (the notes column has no fixed width).
-    Private Shared ReadOnly COL_WIDTHS As Integer() = New Integer() {9, 25, 25, 10, 7, 20, 8, 7}
-
-    ' Previous layout (one line per child with all four medications). Still readable; rewritten in the
-    ' current layout the next time the file is saved.
+    ' Oldest layout: one line per child with all four medications. Still readable; rewritten in the current
+    ' layout the next time the file is saved.
     Private Const LEGACY_MED_FIRST As Integer = 5
     Private Const LEGACY_NOTES As Integer = 17
     Private Shared ReadOnly LEGACY_TITLES As String() = New String() {
@@ -65,6 +86,7 @@ Public Class frmMain
         Public Property Name As String = ""
         Public Property PillsStarted As Decimal
         Public Property DailyDose As Decimal
+        Public Property Refills As String = ""      ' Stored only; never used in a calculation
     End Class
 
     Private Class MedicationRecord
@@ -72,9 +94,11 @@ Public Class frmMain
         Public Property ChildName As String = ""
         Public Property Facility As String = ""
         Public Property StartDate As Date
-        Public Property Refills As String = ""      ' Stored only; never used in a calculation
         Public Property Notes As String = ""
         Public Property Meds As MedEntry()
+
+        ' Only used when loading an older file that had a single refills value for the whole person.
+        Public DefaultRefills As String = ""
 
         Public Sub New()
             Meds = New MedEntry(MED_COUNT - 1) {}
@@ -84,17 +108,33 @@ Public Class frmMain
         End Sub
 
         ' Puts a medication in the first empty slot. Returns False if all four slots are taken.
-        Public Function AddMed(medName As String, pills As Decimal, dose As Decimal) As Boolean
+        Public Function AddMed(medName As String, pills As Decimal, dose As Decimal, medRefills As String) As Boolean
             For i As Integer = 0 To MED_COUNT - 1
                 If Meds(i).Name = "" Then
                     Meds(i).Name = medName
                     Meds(i).PillsStarted = pills
                     Meds(i).DailyDose = dose
+                    Meds(i).Refills = If(medRefills = "", DefaultRefills, medRefills)
                     Return True
                 End If
             Next
             Return False
         End Function
+    End Class
+
+    ' Where the columns sit in one version of the data file (found by title in the header row).
+    Private Class FileLayout
+        Public Titles As String()
+        Public IdCol As Integer
+        Public NameCol As Integer
+        Public FacilityCol As Integer
+        Public StartCol As Integer
+        Public CaseRefillsCol As Integer = -1     ' Older layout only: one refills value for the whole person
+        Public MedNameCol As Integer
+        Public MedPillsCol As Integer
+        Public MedDoseCol As Integer
+        Public MedRefillsCol As Integer = -1      ' Current layout: refills for each medication
+        Public NotesCol As Integer
     End Class
 
     ' Calculated values for one medication.
@@ -132,6 +172,7 @@ Public Class frmMain
     Private _medName As TextBox()
     Private _medPills As NumericUpDown()
     Private _medDose As NumericUpDown()
+    Private _medRefills As TextBox()
     Private _lblPills As Label()
     Private _lblDays As Label()
     Private _lblReminder As Label()
@@ -150,6 +191,7 @@ Public Class frmMain
         _medName = New TextBox() {txtMed1, txtMed2, txtMed3, txtMed4}
         _medPills = New NumericUpDown() {nudPills1, nudPills2, nudPills3, nudPills4}
         _medDose = New NumericUpDown() {nudDose1, nudDose2, nudDose3, nudDose4}
+        _medRefills = New TextBox() {txtRefills1, txtRefills2, txtRefills3, txtRefills4}
         _lblPills = New Label() {lblPillsLeft1, lblPillsLeft2, lblPillsLeft3, lblPillsLeft4}
         _lblDays = New Label() {lblDaysLeft1, lblDaysLeft2, lblDaysLeft3, lblDaysLeft4}
         _lblReminder = New Label() {lblReminder1, lblReminder2, lblReminder3, lblReminder4}
@@ -162,6 +204,8 @@ Public Class frmMain
             AddHandler _medDose(i).ValueChanged, AddressOf InputsChanged
             AddHandler _medPills(i).Enter, AddressOf SelectAllOnEnter
             AddHandler _medDose(i).Enter, AddressOf SelectAllOnEnter
+            _medRefills(i).MaxLength = 3
+            AddHandler _medRefills(i).KeyPress, AddressOf RefillsKeyPress
         Next
     End Sub
 
@@ -190,7 +234,6 @@ Public Class frmMain
         ' Entries cannot be longer than their file columns, so nothing is ever truncated.
         txtName.MaxLength = COL_WIDTHS(C_NAME)
         txtFacility.MaxLength = COL_WIDTHS(C_FACILITY)
-        txtRefills.MaxLength = 3
 
         For i As Integer = 0 To MED_COUNT - 1
             HideSpinner(_medPills(i))
@@ -226,8 +269,8 @@ Public Class frmMain
         ResetResults()
     End Sub
 
-    ' The refills box accepts digits only.
-    Private Sub txtRefills_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtRefills.KeyPress
+    ' The refills boxes accept digits only.
+    Private Sub RefillsKeyPress(sender As Object, e As KeyPressEventArgs)
         If Not Char.IsControl(e.KeyChar) AndAlso Not Char.IsDigit(e.KeyChar) Then e.Handled = True
     End Sub
 
@@ -284,7 +327,6 @@ Public Class frmMain
         rec.ChildName = childName
         rec.Facility = facility
         rec.StartDate = dtpStart.Value.Date
-        rec.Refills = Regex.Replace(txtRefills.Text, "[^0-9]", "")
         rec.Meds = meds
         rec.Notes = txtNotes.Text
 
@@ -356,14 +398,15 @@ Public Class frmMain
             m.Name = _medName(i).Text.Trim()
             m.PillsStarted = _medPills(i).Value
             m.DailyDose = _medDose(i).Value
+            m.Refills = Regex.Replace(_medRefills(i).Text, "[^0-9]", "")
             meds(i) = m
 
             Dim rowNumber As String = (i + 1).ToString(CultureInfo.InvariantCulture)
 
             If m.Name = "" Then
-                If m.PillsStarted > 0D OrElse m.DailyDose > 0D Then
-                    Return Fail(showMessages, "Medication " & rowNumber & " has a pill count or dosage but no name." & vbCrLf &
-                                "Enter the medication name, or set both numbers back to 0.", _medName(i))
+                If m.PillsStarted > 0D OrElse m.DailyDose > 0D OrElse m.Refills <> "" Then
+                    Return Fail(showMessages, "Medication " & rowNumber & " has a pill count, dosage or refills but no name." & vbCrLf &
+                                "Enter the medication name, or clear the entries on that row.", _medName(i))
                 End If
             Else
                 If m.PillsStarted <= 0D Then
@@ -518,13 +561,13 @@ Public Class frmMain
         Try
             txtName.Clear()
             txtFacility.Clear()
-            txtRefills.Clear()
             txtNotes.Clear()
             dtpStart.Value = Date.Today
             For i As Integer = 0 To MED_COUNT - 1
                 _medName(i).Clear()
                 _medPills(i).Value = 0D
                 _medDose(i).Value = 0D
+                _medRefills(i).Clear()
             Next
             ResetResults()
             _currentId = ""
@@ -540,13 +583,13 @@ Public Class frmMain
         Try
             txtName.Text = rec.ChildName
             txtFacility.Text = rec.Facility
-            txtRefills.Text = rec.Refills
             txtNotes.Text = rec.Notes
             dtpStart.Value = rec.StartDate
             For i As Integer = 0 To MED_COUNT - 1
                 _medName(i).Text = rec.Meds(i).Name
                 SetNud(_medPills(i), rec.Meds(i).PillsStarted)
                 SetNud(_medDose(i), rec.Meds(i).DailyDose)
+                _medRefills(i).Text = rec.Meds(i).Refills
             Next
             ResetResults()
             _currentId = rec.Id
@@ -616,10 +659,11 @@ Public Class frmMain
         If Not File.Exists(DATA_FILE) Then Return
 
         Try
-            ' Column start positions are read from the file's own header row, so a file written with
-            ' different column widths still loads correctly (it is rewritten in the current layout on the next save).
+            ' Column positions are read from the file's own header row, so older layouts still load
+            ' (they are rewritten in the current layout on the next save).
+            Dim layout As FileLayout = CurrentLayout()
             Dim starts As Integer() = DefaultColumnStarts()
-            Dim legacy As Boolean = False
+            Dim oldestLayout As Boolean = False
             Dim current As MedicationRecord = Nothing
 
             For Each line As String In File.ReadAllLines(DATA_FILE, Encoding.UTF8)
@@ -631,28 +675,55 @@ Public Class frmMain
                 End If
 
                 If line.StartsWith("ID") Then              ' Header row
-                    legacy = line.Contains("M1 NAME")
-                    Dim headerStarts As Integer() = ReadColumnStarts(line, If(legacy, LEGACY_TITLES, COL_TITLES))
-                    If headerStarts IsNot Nothing Then
-                        starts = headerStarts
+                    oldestLayout = line.Contains("M1 NAME")
+
+                    ' Tell the layouts apart by the order of the REFILLS and PILLS REMAIN titles.
+                    Dim remainPos As Integer = line.IndexOf("PILLS REMAIN", StringComparison.Ordinal)
+                    Dim refillsPos As Integer = line.IndexOf("REFILLS", StringComparison.Ordinal)
+                    Dim isCurrent As Boolean = (remainPos >= 0 AndAlso refillsPos > remainPos)
+
+                    Dim titles As String()
+                    If oldestLayout Then
+                        titles = LEGACY_TITLES
                     Else
-                        legacy = False
+                        If isCurrent Then
+                            layout = CurrentLayout()
+                        ElseIf remainPos >= 0 Then
+                            layout = PreviousLayout()
+                        Else
+                            layout = PriorLayout()
+                        End If
+                        titles = layout.Titles
                     End If
+
+                    Dim headerStarts As Integer() = ReadColumnStarts(line, titles)
+
+                    ' Keep a copy of any file that is not in the current layout before it gets rewritten.
+                    If Not isCurrent OrElse headerStarts Is Nothing Then BackupOldFile()
+
+                    If headerStarts Is Nothing Then
+                        MessageBox.Show("The header row of the data file was not recognized, so its records were not loaded." &
+                                        vbCrLf & vbCrLf & "A copy of the file was saved as " & DATA_FILE & ".old.",
+                                        APP_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                        Return
+                    End If
+
+                    starts = headerStarts
                     Continue For
                 End If
 
-                If legacy Then
+                If oldestLayout Then
                     Dim oldRec As MedicationRecord = ParseLegacyLine(line, starts)
                     If oldRec IsNot Nothing Then _records.Add(oldRec)
 
-                ElseIf Col(line, starts, C_ID) <> "" Then
+                ElseIf Col(line, starts, layout.IdCol) <> "" Then
                     ' A line with an ID starts a new person (case information, first medication, notes).
-                    current = ParseFirstLine(line, starts)
+                    current = ParseFirstLine(line, starts, layout)
                     If current IsNot Nothing Then _records.Add(current)
 
                 ElseIf current IsNot Nothing Then
                     ' No ID: an additional medication for the current person.
-                    AddMedFromLine(current, line, starts)
+                    AddMedFromLine(current, line, starts, layout)
                 End If
             Next
         Catch ex As Exception
@@ -660,6 +731,60 @@ Public Class frmMain
                             APP_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
+
+    Private Shared Sub BackupOldFile()
+        Try
+            File.Copy(DATA_FILE, DATA_FILE & ".old", True)
+        Catch ex As Exception
+            ' A failed backup must not stop the file from loading.
+        End Try
+    End Sub
+
+    Private Shared Function CurrentLayout() As FileLayout
+        Dim l As New FileLayout()
+        l.Titles = COL_TITLES
+        l.IdCol = C_ID
+        l.NameCol = C_NAME
+        l.FacilityCol = C_FACILITY
+        l.StartCol = C_START
+        l.MedNameCol = C_MED_NAME
+        l.MedPillsCol = C_MED_PILLS
+        l.MedDoseCol = C_MED_DOSE
+        l.MedRefillsCol = C_MED_REFILLS
+        l.NotesCol = C_NOTES
+        Return l
+    End Function
+
+    Private Shared Function PriorLayout() As FileLayout
+        Dim l As New FileLayout()
+        l.Titles = PRIOR_TITLES
+        l.IdCol = 0
+        l.NameCol = 1
+        l.FacilityCol = 2
+        l.StartCol = 3
+        l.CaseRefillsCol = 4
+        l.MedNameCol = 5
+        l.MedPillsCol = 6
+        l.MedDoseCol = 7
+        l.NotesCol = 8
+        Return l
+    End Function
+
+    ' Layout used just before refills moved to the end of the line.
+    Private Shared Function PreviousLayout() As FileLayout
+        Dim l As New FileLayout()
+        l.Titles = PREVIOUS_TITLES
+        l.IdCol = 0
+        l.NameCol = 1
+        l.FacilityCol = 2
+        l.StartCol = 3
+        l.MedNameCol = 4
+        l.MedPillsCol = 5
+        l.MedDoseCol = 6
+        l.MedRefillsCol = 7
+        l.NotesCol = 12
+        Return l
+    End Function
 
     Private Shared Function DefaultColumnStarts() As Integer()
         Dim starts(C_NOTES) As Integer
@@ -684,46 +809,60 @@ Public Class frmMain
         Return starts
     End Function
 
-    ' Text of one fixed-width column (index 0 to C_NOTES - 1).
+    ' Text of one fixed-width column (any column before the notes column).
     Private Shared Function Col(line As String, starts As Integer(), index As Integer) As String
         Return Field(line, starts(index), starts(index + 1) - starts(index))
     End Function
 
     ' First line of a person's block: case information, first medication and notes.
-    Private Function ParseFirstLine(line As String, starts As Integer()) As MedicationRecord
-        If line.Length <= starts(C_START) Then Return Nothing
+    Private Function ParseFirstLine(line As String, starts As Integer(), layout As FileLayout) As MedicationRecord
+        If line.Length <= starts(layout.StartCol) Then Return Nothing
 
         Dim startDate As Date
-        If Not Date.TryParseExact(Col(line, starts, C_START), DATE_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None, startDate) Then Return Nothing
+        If Not Date.TryParseExact(Col(line, starts, layout.StartCol), DATE_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None, startDate) Then Return Nothing
 
-        Dim id As String = Col(line, starts, C_ID)
+        Dim id As String = Col(line, starts, layout.IdCol)
         Dim rec As New MedicationRecord()
         ' Keep a valid, unused JV- id; anything else gets a new JV- id.
         rec.Id = If(IsValidId(id) AndAlso Not IdExists(id), id, GenerateId())
-        rec.ChildName = Col(line, starts, C_NAME)
-        rec.Facility = Col(line, starts, C_FACILITY)
+        rec.ChildName = Col(line, starts, layout.NameCol)
+        rec.Facility = Col(line, starts, layout.FacilityCol)
         rec.StartDate = startDate
-        rec.Refills = Col(line, starts, C_REFILLS)
 
-        AddMedFromLine(rec, line, starts)
+        ' Older files had one refills value per person; it is copied onto each of that person's medications.
+        If layout.CaseRefillsCol >= 0 Then
+            rec.DefaultRefills = Regex.Replace(Col(line, starts, layout.CaseRefillsCol), "[^0-9]", "")
+        End If
 
-        If line.Length > starts(C_NOTES) Then rec.Notes = Unescape(line.Substring(starts(C_NOTES)))
+        AddMedFromLine(rec, line, starts, layout)
+
+        If line.Length > starts(layout.NotesCol) Then rec.Notes = Unescape(line.Substring(starts(layout.NotesCol)))
         Return rec
     End Function
 
     ' Reads the medication columns of a line (first line or additional line) and adds the medication to the record.
-    Private Shared Sub AddMedFromLine(rec As MedicationRecord, line As String, starts As Integer())
-        Dim medName As String = Col(line, starts, C_MED_NAME)
+    Private Shared Sub AddMedFromLine(rec As MedicationRecord, line As String, starts As Integer(), layout As FileLayout)
+        Dim medName As String = Col(line, starts, layout.MedNameCol)
         If medName = "" Then Return
 
+        Dim medRefills As String = ""
+        If layout.MedRefillsCol >= 0 Then medRefills = Col(line, starts, layout.MedRefillsCol)
+
         rec.AddMed(medName,
-                   ParseDecimal(Col(line, starts, C_MED_PILLS)),
-                   ParseDecimal(Col(line, starts, C_MED_DOSE)))
+                   ParseDecimal(Col(line, starts, layout.MedPillsCol)),
+                   ParseDecimal(Col(line, starts, layout.MedDoseCol)),
+                   medRefills)
     End Sub
 
-    ' Previous layout: one line per child with four medication groups.
+    ' Oldest layout: one line per child with four medication groups.
     Private Function ParseLegacyLine(line As String, starts As Integer()) As MedicationRecord
-        If line.Length <= starts(C_START) Then Return Nothing
+        Const L_ID As Integer = 0
+        Const L_NAME As Integer = 1
+        Const L_FACILITY As Integer = 2
+        Const L_START As Integer = 3
+        Const L_REFILLS As Integer = 4
+
+        If line.Length <= starts(L_START) Then Return Nothing
 
         Dim v(LEGACY_NOTES - 1) As String
         For i As Integer = 0 To LEGACY_NOTES - 1
@@ -731,19 +870,19 @@ Public Class frmMain
         Next
 
         Dim startDate As Date
-        If Not Date.TryParseExact(v(C_START), DATE_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None, startDate) Then Return Nothing
+        If Not Date.TryParseExact(v(L_START), DATE_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None, startDate) Then Return Nothing
 
         Dim rec As New MedicationRecord()
-        rec.Id = If(IsValidId(v(C_ID)) AndAlso Not IdExists(v(C_ID)), v(C_ID), GenerateId())
-        rec.ChildName = v(C_NAME)
-        rec.Facility = v(C_FACILITY)
+        rec.Id = If(IsValidId(v(L_ID)) AndAlso Not IdExists(v(L_ID)), v(L_ID), GenerateId())
+        rec.ChildName = v(L_NAME)
+        rec.Facility = v(L_FACILITY)
         rec.StartDate = startDate
-        rec.Refills = v(C_REFILLS)
+        rec.DefaultRefills = Regex.Replace(v(L_REFILLS), "[^0-9]", "")
 
         For k As Integer = 0 To MED_COUNT - 1
             Dim first As Integer = LEGACY_MED_FIRST + 3 * k
             If v(first) <> "" Then
-                rec.AddMed(v(first), ParseDecimal(v(first + 1)), ParseDecimal(v(first + 2)))
+                rec.AddMed(v(first), ParseDecimal(v(first + 1)), ParseDecimal(v(first + 2)), "")
             End If
         Next
 
@@ -790,15 +929,16 @@ Public Class frmMain
         Return text.PadRight(width)
     End Function
 
-    ' Pill counts and doses are right-aligned so the digits line up.
+    ' Numbers (pills, dose, pills remaining, days remaining, refills) are right-aligned so the digits line up.
     Private Shared Function IsRightAligned(column As Integer) As Boolean
-        Return column = C_MED_PILLS OrElse column = C_MED_DOSE
+        Return (column >= C_MED_PILLS AndAlso column <= C_MED_DAYS) OrElse column = C_MED_REFILLS
     End Function
 
+    ' Titles are always left-aligned: the loader finds each column by where its title starts.
     Private Shared Function HeaderLine() As String
         Dim sb As New StringBuilder()
         For i As Integer = 0 To C_NOTES - 1
-            sb.Append(PadField(COL_TITLES(i), COL_WIDTHS(i), IsRightAligned(i))).Append(GAP_TEXT)
+            sb.Append(PadField(COL_TITLES(i), COL_WIDTHS(i), False)).Append(GAP_TEXT)
         Next
         sb.Append(COL_TITLES(C_NOTES))
         Return sb.ToString()
@@ -809,40 +949,69 @@ Public Class frmMain
         Return New String("-"c, RULE_WIDTH)
     End Function
 
-    ' Name, pills and dose of one medication, padded to the column widths. Nothing gives blank columns.
-    Private Shared Function MedColumns(m As MedEntry) As String
-        If m Is Nothing Then
-            Return New String(" "c, COL_WIDTHS(C_MED_NAME) + COL_WIDTHS(C_MED_PILLS) + COL_WIDTHS(C_MED_DOSE) + 2 * GAP_TEXT.Length)
+    ' The medication columns for one medication: name, pills, dose, pills remaining, days remaining,
+    ' reminder date, run-out date and refills. Passing Nothing gives blank columns.
+    Private Shared Function MedColumns(m As MedEntry, r As MedResult) As String
+        Dim v(MED_COLUMNS - 1) As String
+        For i As Integer = 0 To MED_COLUMNS - 1
+            v(i) = ""
+        Next
+
+        If m IsNot Nothing Then
+            v(C_MED_NAME - C_MED_NAME) = m.Name
+            v(C_MED_PILLS - C_MED_NAME) = m.PillsStarted.ToString("0.##", CultureInfo.InvariantCulture)
+            v(C_MED_DOSE - C_MED_NAME) = m.DailyDose.ToString("0.##", CultureInfo.InvariantCulture)
+            v(C_MED_REFILLS - C_MED_NAME) = m.Refills
+
+            If r.InUse Then
+                v(C_MED_REMAIN - C_MED_NAME) = r.PillsRemaining.ToString("0.##", CultureInfo.InvariantCulture)
+                v(C_MED_DAYS - C_MED_NAME) = r.DaysRemaining.ToString(CultureInfo.InvariantCulture)
+                v(C_MED_REMINDER - C_MED_NAME) = r.ReminderDate.ToString(DATE_FORMAT, CultureInfo.InvariantCulture)
+                v(C_MED_RUNOUT - C_MED_NAME) = r.RunoutDate.ToString(DATE_FORMAT, CultureInfo.InvariantCulture)
+            End If
         End If
 
-        Return PadField(m.Name, COL_WIDTHS(C_MED_NAME), False) & GAP_TEXT &
-               PadField(m.PillsStarted.ToString("0.##", CultureInfo.InvariantCulture), COL_WIDTHS(C_MED_PILLS), True) & GAP_TEXT &
-               PadField(m.DailyDose.ToString("0.##", CultureInfo.InvariantCulture), COL_WIDTHS(C_MED_DOSE), True)
+        Dim sb As New StringBuilder()
+        For i As Integer = 0 To MED_COLUMNS - 1
+            If i > 0 Then sb.Append(GAP_TEXT)
+            sb.Append(PadField(v(i), COL_WIDTHS(C_MED_NAME + i), IsRightAligned(C_MED_NAME + i)))
+        Next
+        Return sb.ToString()
     End Function
 
     ' All the lines for one person: the first line, one line per additional medication, then a rule line.
     Private Shared Function BuildLines(rec As MedicationRecord) As List(Of String)
         Dim lines As New List(Of String)()
 
+        ' Calculated values (pills remaining, days remaining, reminder and run-out dates) as of today.
+        Dim ev As MedEvaluation = Evaluate(rec.StartDate, rec.Meds, Date.Today)
+
         ' Only medications with a name are written, in order.
-        Dim meds As List(Of MedEntry) = rec.Meds.Where(Function(m) m.Name <> "").ToList()
-        Dim firstMed As MedEntry = Nothing
-        If meds.Count > 0 Then firstMed = meds(0)
+        Dim slots As New List(Of Integer)()
+        For i As Integer = 0 To MED_COUNT - 1
+            If rec.Meds(i).Name <> "" Then slots.Add(i)
+        Next
+
+        Dim firstMedColumns As String
+        If slots.Count > 0 Then
+            firstMedColumns = MedColumns(rec.Meds(slots(0)), ev.Results(slots(0)))
+        Else
+            firstMedColumns = MedColumns(Nothing, New MedResult())
+        End If
 
         Dim sb As New StringBuilder()
         sb.Append(PadField(rec.Id, COL_WIDTHS(C_ID), False)).Append(GAP_TEXT)
         sb.Append(PadField(rec.ChildName, COL_WIDTHS(C_NAME), False)).Append(GAP_TEXT)
         sb.Append(PadField(rec.Facility, COL_WIDTHS(C_FACILITY), False)).Append(GAP_TEXT)
         sb.Append(PadField(rec.StartDate.ToString(DATE_FORMAT, CultureInfo.InvariantCulture), COL_WIDTHS(C_START), False)).Append(GAP_TEXT)
-        sb.Append(PadField(rec.Refills, COL_WIDTHS(C_REFILLS), False)).Append(GAP_TEXT)
-        sb.Append(MedColumns(firstMed)).Append(GAP_TEXT)
+        sb.Append(firstMedColumns).Append(GAP_TEXT)
         sb.Append(Escape(rec.Notes))
         lines.Add(sb.ToString())
 
         ' Each additional medication goes on its own line, lined up under the first medication's columns.
         Dim indent As New String(" "c, DefaultColumnStarts()(C_MED_NAME))
-        For k As Integer = 1 To meds.Count - 1
-            lines.Add(indent & MedColumns(meds(k)))
+        For k As Integer = 1 To slots.Count - 1
+            lines.Add((indent & MedColumns(rec.Meds(slots(k)), ev.Results(slots(k)))).TrimEnd())
         Next
 
         lines.Add(RuleLine())
